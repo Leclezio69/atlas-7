@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Media · ATLAS-7</title><meta name="description" content="Video walkthrough, infographics, slide deck and podcast for ATLAS-7 model validation simulation."><meta name="theme-color" content="#101211"><meta name="claude:viewport-fit-sides" content="cover"><link rel="icon" href="assets/favicon.svg"></head>
+<body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/landing.css">
+<style>
+/* media page specific */
+.media-wrap{max-width:1100px;margin:0 auto;padding:0 clamp(22px,5.2vw,82px)}
+
+/* sections */
+.media-section{padding:68px 0;border-top:1px solid var(--rule)}
+.media-section:first-of-type{border-top:0;padding-top:40px}
+.section-head{margin-bottom:32px}
+.section-num{font:9px var(--f-mono);letter-spacing:.14em;color:var(--gold);display:block;margin-bottom:14px}
+.section-title{font-size:clamp(30px,4vw,48px);font-weight:450;letter-spacing:-.045em;line-height:1.1;color:var(--ink);margin:0}
+.section-desc{font-size:14px;color:var(--ink-2);line-height:1.8;max-width:600px;margin-top:14px}
+
+/* video */
+.video-stage{position:relative;width:100%;padding-bottom:56.25%;background:#000;border-radius:6px;overflow:hidden;box-shadow:0 30px 80px #0003}
+.video-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* infographics carousel */
+.carousel{position:relative;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:#141c17}
+.carousel-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.carousel-slide{min-width:100%;display:grid;grid-template-rows:auto 1fr}
+.carousel-slide img{width:100%;display:block}
+.carousel-caption{padding:24px 28px;min-height:120px}
+.carousel-caption .cap-num{font:9px var(--f-mono);color:var(--gold);letter-spacing:.1em}
+.carousel-caption h3{font-size:22px;font-weight:450;letter-spacing:-.03em;margin:8px 0;color:var(--ink)}
+.carousel-caption p{font-size:13px;color:var(--ink-2);line-height:1.8;max-width:640px}
+.carousel-nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;border-top:1px solid var(--rule);background:#0f170f}
+.carousel-dots{display:flex;gap:8px}
+.carousel-dots button{width:8px;height:8px;border-radius:50%;border:1px solid var(--rule);background:transparent;padding:0;cursor:pointer;transition:background .2s,border-color .2s}
+.carousel-dots button.active{background:var(--gold);border-color:var(--gold)}
+.carousel-arrows{display:flex;gap:10px}
+.carousel-arrows button{background:transparent;border:1px solid var(--rule);color:var(--ink-2);width:40px;height:40px;border-radius:4px;font-size:18px;cursor:pointer;display:grid;place-items:center;transition:color .2s,border-color .2s}
+.carousel-arrows button:hover{color:var(--gold);border-color:var(--gold)}
+
+/* PDF viewer */
+.deck-viewer{border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:#0c120d}
+.deck-canvas-wrap{position:relative;display:grid;place-items:center;min-height:400px;background:#111911;cursor:grab}
+.deck-canvas-wrap canvas{max-width:100%;max-height:70vh;display:block}
+.deck-controls{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-top:1px solid var(--rule);background:#0f170f}
+.deck-controls button{background:transparent;border:1px solid var(--rule);color:var(--ink-2);padding:10px 18px;border-radius:4px;font:12px var(--f-display);cursor:pointer;transition:color .2s,border-color .2s}
+.deck-controls button:hover:not(:disabled){color:var(--gold);border-color:var(--gold)}
+.deck-controls button:disabled{opacity:.3;cursor:not-allowed}
+.deck-page{font:11px var(--f-mono);color:var(--ink-2)}
+.deck-download{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font:12px var(--f-display);color:var(--gold);border:1px solid currentColor;padding:10px 18px;border-radius:4px;transition:background .2s}
+.deck-download:hover{background:rgba(214,164,123,.08)}
+
+/* podcast */
+.podcast-player{border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:linear-gradient(145deg,#1a2218,#0f170f);padding:36px 32px;display:grid;grid-template-columns:80px 1fr;gap:28px;align-items:start}
+.podcast-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#a07048);display:grid;place-items:center;box-shadow:0 8px 30px rgba(214,164,123,.15)}
+.podcast-icon svg{width:36px;height:36px;color:#141c17}
+.podcast-meta .pod-label{font:8px var(--f-mono);letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.podcast-meta h3{font-size:24px;font-weight:450;letter-spacing:-.03em;color:var(--ink);margin:10px 0 6px}
+.podcast-meta .pod-host{font:11px var(--f-mono);color:var(--ink-2);margin-bottom:18px}
+.podcast-meta .pod-desc{font-size:13px;color:var(--ink-2);line-height:1.8;max-width:550px;margin-bottom:22px}
+.pod-controls{display:flex;align-items:center;gap:16px}
+.pod-play{width:48px;height:48px;border-radius:50%;background:var(--gold);border:0;color:#141c17;cursor:pointer;display:grid;place-items:center;transition:transform .2s,background .2s;flex-shrink:0}
+.pod-play:hover{transform:scale(1.06);background:#e6ba95}
+.pod-play svg{width:20px;height:20px;margin-left:2px}
+.pod-progress-wrap{flex:1;display:grid;gap:6px}
+.pod-bar{width:100%;height:4px;background:#2a3a2e;border-radius:2px;cursor:pointer;position:relative;overflow:hidden}
+.pod-bar-fill{height:100%;background:var(--gold);border-radius:2px;width:0;transition:width .2s linear}
+.pod-times{display:flex;justify-content:space-between;font:9px var(--f-mono);color:var(--ink-2)}
+
+@media(max-width:800px){
+  .podcast-player{grid-template-columns:1fr;gap:20px;padding:28px 24px}
+  .podcast-icon{width:60px;height:60px}
+  .podcast-icon svg{width:28px;height:28px}
+  .section-title{font-size:32px}
+  .carousel-caption{padding:20px}
+  .carousel-nav{padding:14px 20px}
+}
+@media(max-width:480px){
+  .media-section{padding:48px 0}
+  .podcast-player{padding:22px 18px}
+  .carousel-caption h3{font-size:19px}
+  .deck-controls{flex-wrap:wrap;gap:12px}
+}
+</style>
+
+<header class="top"><div class="inner">
+  <a class="brand" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 27 16 4l13 23H3Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m10 27 6-11 6 11M8 20h16" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span>ATLAS<span class="brand-dash">—</span>7<small>THE VALIDATION ROOM</small></span></a>
+  <nav><a href="index.html">Home</a><a href="media.html" aria-current="page">Media</a><a class="cta sm" href="app/index.html">Enter the simulation <span class="arr">↗</span></a></nav>
+</div></header>
+
+<div class="media-wrap">
+
+<!-- 01 VIDEO -->
+<section class="media-section">
+  <div class="section-head">
+    <span class="section-num">01 / VIDEO WALKTHROUGH</span>
+    <h1 class="section-title">See it in action.</h1>
+    <p class="section-desc">A full walkthrough of the ATLAS-7 validation simulation — from opening the case file to the committee memo.</p>
+  </div>
+  <div class="video-stage">
+    <iframe src="https://www.youtube.com/embed/i-wR3-uaoh8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
+</section>
+
+<!-- 02 INFOGRAPHICS -->
+<section class="media-section">
+  <div class="section-head">
+    <span class="section-num">02 / INFOGRAPHICS</span>
+    <h2 class="section-title">The system, visualised.</h2>
+    <p class="section-desc">Eight views into the mechanics of model risk validation. Navigate with the arrows or select a card directly.</p>
+  </div>
+  <div class="carousel" id="carousel">
+    <div class="carousel-track" id="carousel-track"></div>
+    <div class="carousel-nav">
+      <div class="carousel-dots" id="carousel-dots"></div>
+      <div class="carousel-arrows">
+        <button id="carousel-prev" aria-label="Previous infographic">&#8592;</button>
+        <button id="carousel-next" aria-label="Next infographic">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 SLIDE DECK -->
+<section class="media-section">
+  <div class="section-head">
+    <span class="section-num">03 / SLIDE DECK</span>
+    <h2 class="section-title">The pitch, page by page.</h2>
+    <p class="section-desc">Ten slides covering what ATLAS-7 is, who it is for, and why it matters. Navigate with arrows or keyboard.</p>
+  </div>
+  <div class="deck-viewer">
+    <div class="deck-canvas-wrap"><canvas id="deck-canvas"></canvas></div>
+    <div class="deck-controls">
+      <button id="deck-prev" disabled>&#8592; Previous</button>
+      <span class="deck-page" id="deck-page">1 / 10</span>
+      <button id="deck-next">Next &#8594;</button>
+      <a class="deck-download" href="assets/media/atlas7-deck.pdf" download>&#8595; Download PDF</a>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PODCAST -->
+<section class="media-section">
+  <div class="section-head">
+    <span class="section-num">04 / PODCAST</span>
+    <h2 class="section-title">The Model Risk Minute.</h2>
+    <p class="section-desc">A two-minute briefing on effective challenge, the gap between knowing the statistics and making the call, and why the hard part is Friday afternoon.</p>
+  </div>
+  <div class="podcast-player" id="podcast">
+    <div class="podcast-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="23"/><line x1="8" x2="16" y1="23" y2="23"/></svg></div>
+    <div class="podcast-meta">
+      <span class="pod-label">Model Risk Minute</span>
+      <h3>Effective Challenge Under Pressure</h3>
+      <p class="pod-host">Richard LeClezio</p>
+      <p class="pod-desc">SR 11-7 says effective challenge means the ability to identify limitations and produce accurate findings. The real test is whether you can hold that finding when the developer pushes back, the business says launch is Monday, and the CRO's office asks if this needs committee.</p>
+      <div class="pod-controls">
+        <button class="pod-play" id="pod-play" aria-label="Play podcast"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,3 20,12 6,21"/></svg></button>
+        <div class="pod-progress-wrap">
+          <div class="pod-bar" id="pod-bar"><div class="pod-bar-fill" id="pod-fill"></div></div>
+          <div class="pod-times"><span id="pod-current">0:00</span><span id="pod-duration">0:00</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <audio id="podcast-audio" preload="none" src="assets/mra-podcast.mp3"></audio>
+</section>
+
+</div>
+
+<footer class="foot"><div class="inner"><span><b>ATLAS-7</b> · A training simulator from The Studio · All institutions, models, thresholds and outcomes are fictional.</span><span>A Richard LeClezio experience</span></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+<script type="module">
+// PDF viewer
+import{GlobalWorkerOptions,getDocument}from'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
+GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+const cv=document.getElementById('deck-canvas'),ctx=cv.getContext('2d');
+let pdf=null,pageNum=1,rendering=false;
+async function renderPage(n){
+  if(!pdf||rendering)return;rendering=true;
+  const page=await pdf.getPage(n);
+  const vp=page.getViewport({scale:2});
+  cv.width=vp.width;cv.height=vp.height;
+  cv.style.width=Math.min(vp.width/2,cv.parentElement.clientWidth-40)+'px';
+  await page.render({canvasContext:ctx,viewport:vp}).promise;
+  document.getElementById('deck-page').textContent=`${n} / ${pdf.numPages}`;
+  document.getElementById('deck-prev').disabled=n<=1;
+  document.getElementById('deck-next').disabled=n>=pdf.numPages;
+  rendering=false;
+}
+getDocument('assets/media/atlas7-deck.pdf').promise.then(p=>{pdf=p;renderPage(1)});
+document.getElementById('deck-prev').addEventListener('click',()=>{if(pageNum>1){pageNum--;renderPage(pageNum)}});
+document.getElementById('deck-next').addEventListener('click',()=>{if(pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowLeft'&&pageNum>1){pageNum--;renderPage(pageNum)}else if(e.key==='ArrowRight'&&pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
+</script>
+
+<script>
+// Infographics carousel
+(()=>{
+const slides=[
+  {img:'assets/media/infographic-01.png',title:'The 40-Hour Budget',desc:'The full test plan needs 49 hours. You have 40. Every test you run is a test you chose over something else. The budget forces prioritisation — which is exactly what real validation demands.'},
+  {img:'assets/media/infographic-02.png',title:'The Defect Spectrum',desc:'Each case deals eleven areas into severe defects, mild defects, false alarms and clean results. Some cases have no High-severity defects at all, so returning every model is not a winning strategy.'},
+  {img:'assets/media/infographic-03.png',title:'The Scoring Engine',desc:'One hundred points across five dimensions. Findings carry fifty, but precision, challenges, your opinion and your conduct under pressure carry the other fifty. The score punishes both misses and overstatements.'},
+  {img:'assets/media/infographic-04.png',title:'The Five-Day Timeline',desc:'Nine hours a day, five days, and an inbox that does not care about your plan. Tuesday brings business pressure. Wednesday, a vendor offer. Thursday, an escalation choice. Friday, the developer fights back.'},
+  {img:'assets/media/infographic-05.png',title:'The Evidence Chain',desc:'Every test produces a chart, a measured result and a threshold strip. Three zones: within tolerance, watch band, breach. The watch band is where judgment separates the examiners from the rubber stamps.'},
+  {img:'assets/media/infographic-06.png',title:'The Developer Challenge',desc:'On Friday the lead developer contests your top three findings. Some replies carry evidence you can check. Some carry only confidence. The ten challenge points reward knowing the difference.'},
+  {img:'assets/media/infographic-07.png',title:'The Opinion Framework',desc:'Approve, approve with conditions, or return to developer. Twenty points for the right call. The answer key reveals which opinion the evidence actually supported — after you commit.'},
+  {img:'assets/media/infographic-08.png',title:'The Regulatory Landscape',desc:'The simulation maps each test to SR 11-7, ECOA, the AI Act and interagency guidance. The references provide training context — the scenario is not an authoritative statement of current requirements.'}
+];
+const track=document.getElementById('carousel-track'),dots=document.getElementById('carousel-dots');
+let idx=0;
+track.innerHTML=slides.map((s,i)=>`<div class="carousel-slide"><img src="${s.img}" alt="${s.title}" loading="${i?'lazy':'eager'}"><div class="carousel-caption"><span class="cap-num">${String(i+1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')}</span><h3>${s.title}</h3><p>${s.desc}</p></div></div>`).join('');
+dots.innerHTML=slides.map((_,i)=>`<button data-idx="${i}" class="${i===0?'active':''}" aria-label="Go to infographic ${i+1}"></button>`).join('');
+function go(n){idx=Math.max(0,Math.min(slides.length-1,n));track.style.transform=`translateX(-${idx*100}%)`;dots.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('active',i===idx))}
+document.getElementById('carousel-prev').addEventListener('click',()=>go(idx-1));
+document.getElementById('carousel-next').addEventListener('click',()=>go(idx+1));
+dots.addEventListener('click',e=>{const b=e.target.closest('[data-idx]');if(b)go(+b.dataset.idx)});
+let sx=0;track.addEventListener('pointerdown',e=>{sx=e.clientX});track.addEventListener('pointerup',e=>{const dx=e.clientX-sx;if(Math.abs(dx)>40)go(idx+(dx<0?1:-1))});
+})();
+
+// Podcast player
+(()=>{
+const audio=document.getElementById('podcast-audio'),btn=document.getElementById('pod-play'),bar=document.getElementById('pod-bar'),fill=document.getElementById('pod-fill'),cur=document.getElementById('pod-current'),dur=document.getElementById('pod-duration');
+const fmt=s=>{const m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+String(r).padStart(2,'0')};
+let playing=false;
+btn.addEventListener('click',()=>{
+  if(playing){audio.pause();btn.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>';playing=false}
+  else{audio.play();btn.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>';playing=true}
+});
+audio.addEventListener('loadedmetadata',()=>{dur.textContent=fmt(audio.duration)});
+audio.addEventListener('timeupdate',()=>{if(audio.duration){fill.style.width=(audio.currentTime/audio.duration*100)+'%';cur.textContent=fmt(audio.currentTime)}});
+audio.addEventListener('ended',()=>{playing=false;btn.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>';fill.style.width='0'});
+bar.addEventListener('click',e=>{if(audio.duration){const r=e.offsetX/bar.offsetWidth;audio.currentTime=r*audio.duration}});
+})();
+</script>
+
+</body>
+</html>
