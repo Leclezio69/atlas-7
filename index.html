@@ -224,14 +224,28 @@ footer.foot b{color:var(--h-ink);font-weight:600}
   .brand small{display:none}
 }
 @media (prefers-reduced-motion:reduce){.card .f,.card .b{transition:none}}
+
+/* voice briefing button */
+.voice-btn{display:flex;align-items:center;gap:7px;background:transparent;border:1px solid #5c5d50;padding:8px 14px;color:var(--h-ink2);font:12px var(--f-display);border-radius:2px;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.voice-btn svg{width:18px;height:18px;flex-shrink:0}
+.voice-btn:hover{color:var(--h-ink);border-color:var(--h-ink2)}
+.voice-btn.playing{color:var(--gold);border-color:var(--gold);background:rgba(214,164,123,.08)}
+.voice-btn.playing svg{animation:pulse-voice 1.6s ease-in-out infinite}
+@keyframes pulse-voice{0%,100%{opacity:1}50%{opacity:.5}}
+.voice-progress{position:absolute;bottom:0;left:0;height:2px;background:var(--gold);transition:width .3s linear;border-radius:1px}
+.voice-btn{position:relative;overflow:hidden}
+@media(max-width:800px){.voice-label{display:none}.voice-btn{padding:8px 10px}}
+@media(max-width:480px){.voice-btn{padding:7px 8px}.voice-btn svg{width:16px;height:16px}}
 </style>
 
 <link rel="stylesheet" href="assets/landing.css"><link rel="stylesheet" href="assets/landing-visuals.css"><a class="skip" href="index.html?view=week">Skip to the simulation overview</a>
 <header class="top"><div class="inner">
   <a class="brand" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 27 16 4l13 23H3Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m10 27 6-11 6 11M8 20h16" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span>ATLAS<span class="brand-dash">—</span>7<small>THE VALIDATION ROOM</small></span></a>
   <nav><a href="index.html?view=week" class="hide-sm">The week</a><a href="index.html?view=evidence" class="hide-sm">Evidence</a><a href="index.html?view=cases">Cases</a><a href="index.html?view=outputs" class="hide-sm">Scoring</a>
+    <button class="voice-btn" id="voice-btn" aria-label="Listen to the briefing" title="Listen to the briefing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 1 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5Z"/></svg><span class="voice-label">Briefing</span></button>
     <a class="cta sm" data-game href="app/index.html">Enter the simulation <span class="arr">↗</span></a></nav>
 </div></header>
+<audio id="voice-intro" preload="none" src="assets/voice-intro.mp3"></audio>
 <div class="feature-return"><div class="inner"><a href="index.html">← Back to overview</a><span data-feature-name></span></div></div>
 
 <section class="hero" id="top">
@@ -375,5 +389,19 @@ footer.foot b{color:var(--h-ink);font-weight:600}
 <script src="assets/shared.js"></script>
 <script src="assets/landing-main.js"></script>
 
-<script src="assets/landing.js"></script><script src="assets/landing-visuals.js"></script></body>
+<script src="assets/landing.js"></script><script src="assets/landing-visuals.js"></script>
+<script>
+(()=>{
+  const btn=document.getElementById('voice-btn'),audio=document.getElementById('voice-intro');
+  if(!btn||!audio)return;
+  const bar=document.createElement('div');bar.className='voice-progress';btn.append(bar);
+  btn.addEventListener('click',()=>{
+    if(audio.paused){audio.play();btn.classList.add('playing');btn.setAttribute('aria-label','Pause the briefing')}
+    else{audio.pause();btn.classList.remove('playing');btn.setAttribute('aria-label','Listen to the briefing');bar.style.width='0'}
+  });
+  audio.addEventListener('timeupdate',()=>{if(audio.duration)bar.style.width=(audio.currentTime/audio.duration*100)+'%'});
+  audio.addEventListener('ended',()=>{btn.classList.remove('playing');bar.style.width='0';btn.setAttribute('aria-label','Listen to the briefing')});
+})();
+</script>
+</body>
 </html>
