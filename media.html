@@ -55,6 +55,8 @@
 .deck-page{font:11px var(--f-mono);color:var(--ink-2)}
 .deck-download{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font:12px var(--f-display);color:var(--gold);border:1px solid currentColor;padding:10px 18px;border-radius:4px;transition:background .2s}
 .deck-download:hover{background:rgba(214,164,123,.08)}
+.deck-fallback{padding:60px 24px;text-align:center;color:var(--ink-2);font-size:14px}
+.deck-fallback a{color:var(--gold)}
 
 /* podcast */
 .podcast-player{border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:linear-gradient(145deg,#1a2218,#0f170f);padding:36px 32px;display:grid;grid-template-columns:80px 1fr;gap:28px;align-items:start}
@@ -135,11 +137,11 @@
     <p class="section-desc">Ten slides covering what ATLAS-7 is, who it is for, and why it matters. Navigate with arrows or keyboard.</p>
   </div>
   <div class="deck-viewer">
-    <div class="deck-canvas-wrap"><canvas id="deck-canvas"></canvas></div>
+    <div class="deck-canvas-wrap" id="deck-wrap"><canvas id="deck-canvas"></canvas><div class="deck-fallback" id="deck-fallback" hidden><p>Loading slides...</p></div></div>
     <div class="deck-controls">
       <button id="deck-prev" disabled>&#8592; Previous</button>
-      <span class="deck-page" id="deck-page">1 / 10</span>
-      <button id="deck-next">Next &#8594;</button>
+      <span class="deck-page" id="deck-page">Loading...</span>
+      <button id="deck-next" disabled>Next &#8594;</button>
       <a class="deck-download" href="assets/media/atlas7-deck.pdf" download>&#8595; Download PDF</a>
     </div>
   </div>
@@ -175,39 +177,41 @@
 
 <footer class="foot"><div class="inner"><span><b>ATLAS-7</b> · A training simulator from The Studio · All institutions, models, thresholds and outcomes are fictional.</span><span>A Richard LeClezio experience</span></div></footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-// PDF viewer using pdf.js 3.x (legacy build for broad compat)
-(async()=>{
-  const s=document.createElement('script');
-  s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-  s.onload=async()=>{
-    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    const cv=document.getElementById('deck-canvas'),ctx=cv.getContext('2d');
-    let pdf=null,pageNum=1,rendering=false;
-    async function renderPage(n){
-      if(!pdf||rendering)return;rendering=true;
-      try{
-        const page=await pdf.getPage(n);
-        const scale=2;
-        const vp=page.getViewport({scale});
-        cv.width=vp.width;cv.height=vp.height;
-        cv.style.width=Math.min(vp.width/scale,cv.parentElement.clientWidth-40)+'px';
-        await page.render({canvasContext:ctx,viewport:vp}).promise;
+// PDF viewer
+(function(){
+  if(typeof pdfjsLib==='undefined'){document.getElementById('deck-fallback').hidden=false;document.getElementById('deck-fallback').innerHTML='<p>PDF viewer could not load. <a href="assets/media/atlas7-deck.pdf" style="color:var(--gold)">Download the deck instead.</a></p>';return}
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  var cv=document.getElementById('deck-canvas'),ctx=cv.getContext('2d');
+  var pdf=null,pageNum=1,rendering=false;
+  function renderPage(n){
+    if(!pdf||rendering)return;rendering=true;
+    pdf.getPage(n).then(function(page){
+      var scale=2;
+      var vp=page.getViewport({scale:scale});
+      cv.width=vp.width;cv.height=vp.height;
+      cv.style.width=Math.min(vp.width/scale,cv.parentElement.clientWidth-40)+'px';
+      page.render({canvasContext:ctx,viewport:vp}).promise.then(function(){
         document.getElementById('deck-page').textContent=n+' / '+pdf.numPages;
         document.getElementById('deck-prev').disabled=n<=1;
         document.getElementById('deck-next').disabled=n>=pdf.numPages;
-      }catch(e){console.error('PDF render error',e)}
-      rendering=false;
-    }
-    try{
-      pdf=await pdfjsLib.getDocument('assets/media/atlas7-deck.pdf').promise;
-      renderPage(1);
-    }catch(e){console.error('PDF load error',e)}
-    document.getElementById('deck-prev').addEventListener('click',()=>{if(pageNum>1){pageNum--;renderPage(pageNum)}});
-    document.getElementById('deck-next').addEventListener('click',()=>{if(pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
-    document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowLeft'&&pageNum>1){pageNum--;renderPage(pageNum)}else if(e.key==='ArrowRight'&&pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
-  };
-  document.head.appendChild(s);
+        document.getElementById('deck-canvas').hidden=false;
+        document.getElementById('deck-fallback').hidden=true;
+        rendering=false;
+      });
+    }).catch(function(e){console.error('PDF render error',e);rendering=false});
+  }
+  pdfjsLib.getDocument('assets/media/atlas7-deck.pdf').promise.then(function(p){
+    pdf=p;renderPage(1);
+  }).catch(function(e){
+    console.error('PDF load error',e);
+    document.getElementById('deck-fallback').hidden=false;
+    document.getElementById('deck-fallback').innerHTML='<p>Could not load PDF. <a href="assets/media/atlas7-deck.pdf" style="color:var(--gold)">Download instead.</a></p>';
+  });
+  document.getElementById('deck-prev').addEventListener('click',function(){if(pageNum>1){pageNum--;renderPage(pageNum)}});
+  document.getElementById('deck-next').addEventListener('click',function(){if(pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
+  document.addEventListener('keydown',function(e){if(e.target.tagName==='INPUT')return;if(e.key==='ArrowLeft'&&pageNum>1){pageNum--;renderPage(pageNum)}else if(e.key==='ArrowRight'&&pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
 })();
 </script>
 
@@ -215,14 +219,14 @@
 // Infographics carousel
 (()=>{
 const slides=[
-  {img:'assets/media/infographic-01.png',title:'The 40-Hour Budget',desc:'The full test plan needs 49 hours. You have 40. Every test you run is a test you chose over something else. The budget forces prioritisation — which is exactly what real validation demands.'},
-  {img:'assets/media/infographic-02.png',title:'The Defect Spectrum',desc:'Each case deals eleven areas into severe defects, mild defects, false alarms and clean results. Some cases have no High-severity defects at all, so returning every model is not a winning strategy.'},
-  {img:'assets/media/infographic-03.png',title:'The Scoring Engine',desc:'One hundred points across five dimensions. Findings carry fifty, but precision, challenges, your opinion and your conduct under pressure carry the other fifty. The score punishes both misses and overstatements.'},
-  {img:'assets/media/infographic-04.png',title:'The Five-Day Timeline',desc:'Nine hours a day, five days, and an inbox that does not care about your plan. Tuesday brings business pressure. Wednesday, a vendor offer. Thursday, an escalation choice. Friday, the developer fights back.'},
-  {img:'assets/media/infographic-05.png',title:'The Evidence Chain',desc:'Every test produces a chart, a measured result and a threshold strip. Three zones: within tolerance, watch band, breach. The watch band is where judgment separates the examiners from the rubber stamps.'},
-  {img:'assets/media/infographic-06.png',title:'The Developer Challenge',desc:'On Friday the lead developer contests your top three findings. Some replies carry evidence you can check. Some carry only confidence. The ten challenge points reward knowing the difference.'},
-  {img:'assets/media/infographic-07.png',title:'The Opinion Framework',desc:'Approve, approve with conditions, or return to developer. Twenty points for the right call. The answer key reveals which opinion the evidence actually supported — after you commit.'},
-  {img:'assets/media/infographic-08.png',title:'The Regulatory Landscape',desc:'The simulation maps each test to SR 11-7, ECOA, the AI Act and interagency guidance. The references provide training context — the scenario is not an authoritative statement of current requirements.'}
+  {img:'assets/media/infographic-01.jpg',title:'The 40-Hour Budget',desc:'The full test plan needs 49 hours. You have 40. Every test you run is a test you chose over something else. The budget forces prioritisation — which is exactly what real validation demands.'},
+  {img:'assets/media/infographic-02.jpg',title:'The Defect Spectrum',desc:'Each case deals eleven areas into severe defects, mild defects, false alarms and clean results. Some cases have no High-severity defects at all, so returning every model is not a winning strategy.'},
+  {img:'assets/media/infographic-03.jpg',title:'The Scoring Engine',desc:'One hundred points across five dimensions. Findings carry fifty, but precision, challenges, your opinion and your conduct under pressure carry the other fifty. The score punishes both misses and overstatements.'},
+  {img:'assets/media/infographic-04.jpg',title:'The Five-Day Timeline',desc:'Nine hours a day, five days, and an inbox that does not care about your plan. Tuesday brings business pressure. Wednesday, a vendor offer. Thursday, an escalation choice. Friday, the developer fights back.'},
+  {img:'assets/media/infographic-05.jpg',title:'The Evidence Chain',desc:'Every test produces a chart, a measured result and a threshold strip. Three zones: within tolerance, watch band, breach. The watch band is where judgment separates the examiners from the rubber stamps.'},
+  {img:'assets/media/infographic-06.jpg',title:'The Developer Challenge',desc:'On Friday the lead developer contests your top three findings. Some replies carry evidence you can check. Some carry only confidence. The ten challenge points reward knowing the difference.'},
+  {img:'assets/media/infographic-07.jpg',title:'The Opinion Framework',desc:'Approve, approve with conditions, or return to developer. Twenty points for the right call. The answer key reveals which opinion the evidence actually supported — after you commit.'},
+  {img:'assets/media/infographic-08.jpg',title:'The Regulatory Landscape',desc:'The simulation maps each test to SR 11-7, ECOA, the AI Act and interagency guidance. The references provide training context — the scenario is not an authoritative statement of current requirements.'}
 ];
 const track=document.getElementById('carousel-track'),dots=document.getElementById('carousel-dots');
 let idx=0;
