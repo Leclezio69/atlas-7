@@ -175,29 +175,40 @@
 
 <footer class="foot"><div class="inner"><span><b>ATLAS-7</b> · A training simulator from The Studio · All institutions, models, thresholds and outcomes are fictional.</span><span>A Richard LeClezio experience</span></div></footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
-<script type="module">
-// PDF viewer
-import{GlobalWorkerOptions,getDocument}from'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
-GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
-const cv=document.getElementById('deck-canvas'),ctx=cv.getContext('2d');
-let pdf=null,pageNum=1,rendering=false;
-async function renderPage(n){
-  if(!pdf||rendering)return;rendering=true;
-  const page=await pdf.getPage(n);
-  const vp=page.getViewport({scale:2});
-  cv.width=vp.width;cv.height=vp.height;
-  cv.style.width=Math.min(vp.width/2,cv.parentElement.clientWidth-40)+'px';
-  await page.render({canvasContext:ctx,viewport:vp}).promise;
-  document.getElementById('deck-page').textContent=`${n} / ${pdf.numPages}`;
-  document.getElementById('deck-prev').disabled=n<=1;
-  document.getElementById('deck-next').disabled=n>=pdf.numPages;
-  rendering=false;
-}
-getDocument('assets/media/atlas7-deck.pdf').promise.then(p=>{pdf=p;renderPage(1)});
-document.getElementById('deck-prev').addEventListener('click',()=>{if(pageNum>1){pageNum--;renderPage(pageNum)}});
-document.getElementById('deck-next').addEventListener('click',()=>{if(pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
-document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowLeft'&&pageNum>1){pageNum--;renderPage(pageNum)}else if(e.key==='ArrowRight'&&pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
+<script>
+// PDF viewer using pdf.js 3.x (legacy build for broad compat)
+(async()=>{
+  const s=document.createElement('script');
+  s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  s.onload=async()=>{
+    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    const cv=document.getElementById('deck-canvas'),ctx=cv.getContext('2d');
+    let pdf=null,pageNum=1,rendering=false;
+    async function renderPage(n){
+      if(!pdf||rendering)return;rendering=true;
+      try{
+        const page=await pdf.getPage(n);
+        const scale=2;
+        const vp=page.getViewport({scale});
+        cv.width=vp.width;cv.height=vp.height;
+        cv.style.width=Math.min(vp.width/scale,cv.parentElement.clientWidth-40)+'px';
+        await page.render({canvasContext:ctx,viewport:vp}).promise;
+        document.getElementById('deck-page').textContent=n+' / '+pdf.numPages;
+        document.getElementById('deck-prev').disabled=n<=1;
+        document.getElementById('deck-next').disabled=n>=pdf.numPages;
+      }catch(e){console.error('PDF render error',e)}
+      rendering=false;
+    }
+    try{
+      pdf=await pdfjsLib.getDocument('assets/media/atlas7-deck.pdf').promise;
+      renderPage(1);
+    }catch(e){console.error('PDF load error',e)}
+    document.getElementById('deck-prev').addEventListener('click',()=>{if(pageNum>1){pageNum--;renderPage(pageNum)}});
+    document.getElementById('deck-next').addEventListener('click',()=>{if(pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
+    document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowLeft'&&pageNum>1){pageNum--;renderPage(pageNum)}else if(e.key==='ArrowRight'&&pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
+  };
+  document.head.appendChild(s);
+})();
 </script>
 
 <script>
