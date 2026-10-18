@@ -1,8 +1,8 @@
 /* The experience layer uses observed state during play; truth is used only in report.
    glyph() is provided by shared.js. */
-const AREA_LABELS={leak:'Data lineage',fair:'Fair lending',aan:'Reason codes',impl:'Replication',drift:'Population drift',overfit:'Validation',calib:'Calibration',segment:'Thin-file cohort',vendor:'Vendor model',monitor:'Monitoring',docs:'Documentation'};
-const OBS_IDS=['leak','fair','aan','impl','drift','overfit','calib','segment','vendor','monitor','docs'];
-const EXPERIENCE_PREFS={motion:true,exploded:false};
+var AREA_LABELS={leak:'Data lineage',fair:'Fair lending',aan:'Reason codes',impl:'Replication',drift:'Population drift',overfit:'Validation',calib:'Calibration',segment:'Thin-file cohort',vendor:'Vendor model',monitor:'Monitoring',docs:'Documentation'};
+var OBS_IDS=['leak','fair','aan','impl','drift','overfit','calib','segment','vendor','monitor','docs'];
+var EXPERIENCE_PREFS={motion:true,exploded:false};
 try{EXPERIENCE_PREFS.motion=localStorage.getItem('atlas7-motion')!=='off'}catch(_){}
 function observedState(id){if(!S.run[id])return'idle';const f=S.findings[id];if(f?.sev&&f.sev!=='X')return f.sev;if(S.ex[id]==='cleared')return'clear';return'review'}
 function statusLabel(state){return{idle:'Unexamined',review:'Awaiting your call',clear:'Cleared by you',H:'High finding',M:'Medium finding',L:'Low finding'}[state]}

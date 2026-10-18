@@ -1,4 +1,4 @@
-let toastTimer;
+var toastTimer;
 function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('visible'),4200)}
 function showDialog(markup){const d=document.getElementById('command-dialog');d.innerHTML=markup;d.showModal()}
 function requestReset(same){

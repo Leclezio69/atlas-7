@@ -1,12 +1,12 @@
 "use strict";
-const DAYS=[["Mon",12],["Tue",13],["Wed",14],["Thu",15],["Fri",16]];
-const FULL=["Monday","Tuesday","Wednesday","Thursday","Friday"];
-const BUDGET=40, DAILY=9;
-const LEAKF=["days_since_last_collection_call","hardship_flag_updated","payment_plan_count","promise_to_pay_count"];
-const pctS=v=>Math.round(v*100)+"%";
+var DAYS=[["Mon",12],["Tue",13],["Wed",14],["Thu",15],["Fri",16]];
+var FULL=["Monday","Tuesday","Wednesday","Thursday","Friday"];
+var BUDGET=40, DAILY=9;
+var LEAKF=["days_since_last_collection_call","hardship_flag_updated","payment_plan_count","promise_to_pay_count"];
+var pctS=v=>Math.round(v*100)+"%";
 
 /* ---------- the defect pool: one test per potential defect ---------- */
-const D={
+var D={
  leak:{test:"Feature timing review",el:"Conceptual soundness",hrs:5,desc:"Trace each feature to when it is known relative to the decision.",
   title:"Target leakage from post-decision data",hook:"SR 11-7 conceptual soundness · EU AI Act Art. 10",
   remed:"Remove post-decision fields, rebuild, and restate out-of-time performance.",
@@ -184,12 +184,12 @@ const D={
   missed:"Thin-file losses run at twice plan and the growth campaign is shut down.",
   held:"Thin-file use restricted pending a segment model."}
 };
-const IDS=Object.keys(D);
-const HIGHCAP=["leak","fair","aan","impl"];
-const ORDER=["interview","leak","fair","aan","impl","drift","overfit","calib","segment","vendor","monitor","docs"];
-const SEVW={H:14,M:9,L:5}, RANK={H:3,M:2,L:1}, SEVN={H:"High",M:"Medium",L:"Low"};
+var IDS=Object.keys(D);
+var HIGHCAP=["leak","fair","aan","impl"];
+var ORDER=["interview","leak","fair","aan","impl","drift","overfit","calib","segment","vendor","monitor","docs"];
+var SEVW={H:14,M:9,L:5}, RANK={H:3,M:2,L:1}, SEVN={H:"High",M:"Medium",L:"Low"};
 
-const EVENTS={
+var EVENTS={
   2:{key:"pressure",from:"Dana Whitlock, Head of Consumer Lending",subject:"Launch is booked for Monday",
      body:"Marketing spend is committed and the call center is staffed. I need a preliminary green light from Validation today so we can hold the date. You can finish the paperwork after go-live.",
      options:[{v:"hold",b:"Hold the line",s:"No approval until the review is complete."},
@@ -207,7 +207,7 @@ const EVENTS={
 /* ---------- seeded case generation ---------- */
 function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-const CODECH="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+var CODECH="ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 function codeFrom(seed){let s=seed>>>0,c="";for(let i=0;i<4;i++){c+=CODECH[s%CODECH.length];s=Math.floor(s/CODECH.length)}return c}
 function seedFrom(code){let s=0;for(let i=code.length-1;i>=0;i--){const k=CODECH.indexOf(code[i]);if(k<0)return null;s=s*CODECH.length+k}return s}
 function newSeed(){try{const u=new Uint32Array(1);crypto.getRandomValues(u);return u[0]%(CODECH.length**4)}catch(_){return Math.floor(Math.random()*CODECH.length**4)}}
@@ -230,19 +230,19 @@ function buildCase(seed){
 }
 
 /* ---------- state ---------- */
-let S;
+var S;
 function fresh(seed){
   seed=seed??newSeed();
   return {v:2,seed,code:codeFrom(seed),...buildCase(seed),day:1,spent:0,today:0,run:{},fu:{},ex:{},findings:{},log:[],choices:{},
     event:null,rbq:[],rbi:0,rbres:{},decision:null,phase:"play",fresh:null};
 }
-const $=s=>document.querySelector(s);
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const testHrs=id=>id==="interview"?2:id==="vendor"&&S.choices.vendor==="nda"?2:D[id].hrs;
-const todayLeft=()=>Math.max(0,Math.min(DAILY-S.today,BUDGET-S.spent));
-const zoneOf=id=>{const m=D[id].m,v=S.vals[id];for(const[a,b,z]of m.bands)if(v>=a&&v<=b)return z;return m.bands[m.bands.length-1][2]};
-const trueSev=id=>S.truth[id]==="severe"?D[id].sev[0]:S.truth[id]==="mild"?D[id].sev[1]:null;
-const claimedAUC=()=>S.truth.leak==="severe"?"0.93":S.truth.leak==="mild"?"0.85":"0.81";
+var $=s=>document.querySelector(s);
+var esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+var testHrs=id=>id==="interview"?2:id==="vendor"&&S.choices.vendor==="nda"?2:D[id].hrs;
+var todayLeft=()=>Math.max(0,Math.min(DAILY-S.today,BUDGET-S.spent));
+var zoneOf=id=>{const m=D[id].m,v=S.vals[id];for(const[a,b,z]of m.bands)if(v>=a&&v<=b)return z;return m.bands[m.bands.length-1][2]};
+var trueSev=id=>S.truth[id]==="severe"?D[id].sev[0]:S.truth[id]==="mild"?D[id].sev[1]:null;
+var claimedAUC=()=>S.truth.leak==="severe"?"0.93":S.truth.leak==="mild"?"0.85":"0.81";
 
 function spend(h){S.spent+=h;S.today+=h}
 function runTest(id){
@@ -319,9 +319,9 @@ function grade(){
 
 /* ---------- visual layer: charts and model map ---------- */
 function hashStr(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
-const RR=id=>rng((S.seed*7919+hashStr(id))>>>0);
-const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
-const norm=a=>{const s=a.reduce((x,y)=>x+y,0);return a.map(x=>x/s)};
+var RR=id=>rng((S.seed*7919+hashStr(id))>>>0);
+var clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+var norm=a=>{const s=a.reduce((x,y)=>x+y,0);return a.map(x=>x/s)};
 function gauss(r){let u=0;while(!u)u=r();const v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
 function Phi(x){const t=1/(1+0.3275911*Math.abs(x)/Math.SQRT2);const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x/2);return x>=0?(1+y)/2:(1-y)/2}
 function PhiInv(p){const a=[-39.69683028665376,220.9460984245205,-275.9285104469687,138.357751867269,-30.66479806614716,2.506628277459239],
@@ -331,14 +331,14 @@ function PhiInv(p){const a=[-39.69683028665376,220.9460984245205,-275.9285104469
  if(p<0.02425){q=Math.sqrt(-2*Math.log(p));return(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}
  if(p>0.97575){q=Math.sqrt(-2*Math.log(1-p));return-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}
  q=p-0.5;r=q*q;return(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1)}
-const tp=s=>` data-tip="${esc(s)}" tabindex="0"`;
-const f1=x=>(+x).toFixed(1);
-const svgOpen=(w,h,label)=>`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">`;
-const legend=items=>`<div class="legend">${items.map(([c,l])=>`<span><i class="sw ${c}"></i>${esc(l)}</span>`).join("")}</div>`;
-const yGrid=(x0,x1,y,ticks,fmt)=>ticks.map(t=>`<line class="g" x1="${x0}" x2="${x1}" y1="${f1(y(t))}" y2="${f1(y(t))}"/><text class="ax" x="${x0-6}" y="${f1(y(t)+3.5)}" text-anchor="end">${fmt(t)}</text>`).join("");
+var tp=s=>` data-tip="${esc(s)}" tabindex="0"`;
+var f1=x=>(+x).toFixed(1);
+var svgOpen=(w,h,label)=>`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">`;
+var legend=items=>`<div class="legend">${items.map(([c,l])=>`<span><i class="sw ${c}"></i>${esc(l)}</span>`).join("")}</div>`;
+var yGrid=(x0,x1,y,ticks,fmt)=>ticks.map(t=>`<line class="g" x1="${x0}" x2="${x1}" y1="${f1(y(t))}" y2="${f1(y(t))}"/><text class="ax" x="${x0-6}" y="${f1(y(t)+3.5)}" text-anchor="end">${fmt(t)}</text>`).join("");
 function vbar(x,y0,w,h,cls,t){if(h<=.5)return"";const r=Math.min(4,h,w/2),y=y0-h;return `<path class="${cls}" d="M${f1(x)},${f1(y0)}V${f1(y+r)}Q${f1(x)},${f1(y)} ${f1(x+r)},${f1(y)}H${f1(x+w-r)}Q${f1(x+w)},${f1(y)} ${f1(x+w)},${f1(y+r)}V${f1(y0)}Z"${t?tp(t):""}/>`}
 function hbar(x0,x1,yc,h,cls,t){const w=x1-x0;if(w<=.5)return"";const r=Math.min(4,w,h/2),y=yc-h/2;return `<path class="${cls}" d="M${f1(x0)},${f1(y)}H${f1(x1-r)}Q${f1(x1)},${f1(y)} ${f1(x1)},${f1(y+r)}V${f1(y+h-r)}Q${f1(x1)},${f1(y+h)} ${f1(x1-r)},${f1(y+h)}H${f1(x0)}Z"${t?tp(t):""}/>`}
-const fig=(svg,leg,cap)=>`<figure class="fig">${leg||""}<div class="figbox">${svg}</div>${cap?`<figcaption>${esc(cap)}</figcaption>`:""}</figure>`;
+var fig=(svg,leg,cap)=>`<figure class="fig">${leg||""}<div class="figbox">${svg}</div>${cap?`<figcaption>${esc(cap)}</figcaption>`:""}</figure>`;
 
 function cDrift(id){
   const v=S.vals[id],N=10,W=520,H=196,ml=40,mr=8,mt=10,mb=30;
@@ -414,7 +414,7 @@ function cFair(id){
   g+=`<line class="thr" x1="${f1(thr)}" x2="${f1(thr)}" y1="${mt-12}" y2="${H-20}"/><text class="ax thrt" x="${f1(thr)}" y="${mt-14}" text-anchor="middle">FOUR-FIFTHS LINE</text>`;
   return fig(svgOpen(W,H,"Approval rate by group with four-fifths line")+g+`</svg>`,"","Approval rate by BISG-estimated group, applicants with similar bureau profiles");
 }
-const REASONS=["Debt-to-income","Revolving utilization","Recent delinquency","Short credit history"];
+var REASONS=["Debt-to-income","Revolving utilization","Recent delinquency","Short credit history"];
 function cAan(id){
   const v=S.vals[id],r=RR(id),rows=10,cols=20,W=520,ml=54,mt=4,ch=14,cw=(W-ml-4)/cols,H=mt+rows*(ch+2)+22;
   let g="",flips=0;
@@ -455,16 +455,16 @@ function cLeak(id){
   return fig(svgOpen(W,H,"When each feature becomes known relative to the credit decision")+g+`</svg>`,"","Sample of features. Bars show when each value exists relative to the decision.");
 }
 function tiles(names,bad,label){return `<figure class="fig"><div class="tiles" role="list" aria-label="${esc(label)}">${names.map(n=>`<div role="listitem" class="tile ${bad.includes(n)?"miss":"have"}"><i>${bad.includes(n)?"✕":"✓"}</i><span>${esc(n)}</span></div>`).join("")}</div></figure>`}
-const VEND=["Methodology","Change management","Development data","Ongoing monitoring","Performance testing","Limitations"];
-const MONS=["AUC","Approval rate","Default vs forecast","Override rate","Data quality","Reason stability","PSI drift","Adverse impact ratio"];
-const DOCS=["Purpose","Data sources","Methodology","Feature design","Performance","Benchmarking","Sensitivity","Implementation","Governance","Assumptions","Ongoing monitoring","Approved use","Alternatives considered","Limitations"];
-const tVendor=id=>tiles(VEND,VEND.slice(S.vals[id]),"Vendor evidence checklist");
-const tMon=id=>tiles(MONS,MONS.slice(S.vals[id]),"Metrics with trigger thresholds");
-const tDocs=id=>tiles(DOCS,DOCS.slice(DOCS.length-S.vals[id]),"Required documentation sections");
-const CHART={drift:cDrift,overfit:cOverfit,calib:cCalib,segment:cRoc,fair:cFair,aan:cAan,impl:cImpl,leak:cLeak,vendor:tVendor,monitor:tMon,docs:tDocs};
+var VEND=["Methodology","Change management","Development data","Ongoing monitoring","Performance testing","Limitations"];
+var MONS=["AUC","Approval rate","Default vs forecast","Override rate","Data quality","Reason stability","PSI drift","Adverse impact ratio"];
+var DOCS=["Purpose","Data sources","Methodology","Feature design","Performance","Benchmarking","Sensitivity","Implementation","Governance","Assumptions","Ongoing monitoring","Approved use","Alternatives considered","Limitations"];
+var tVendor=id=>tiles(VEND,VEND.slice(S.vals[id]),"Vendor evidence checklist");
+var tMon=id=>tiles(MONS,MONS.slice(S.vals[id]),"Metrics with trigger thresholds");
+var tDocs=id=>tiles(DOCS,DOCS.slice(DOCS.length-S.vals[id]),"Required documentation sections");
+var CHART={drift:cDrift,overfit:cOverfit,calib:cCalib,segment:cRoc,fair:cFair,aan:cAan,impl:cImpl,leak:cLeak,vendor:tVendor,monitor:tMon,docs:tDocs};
 
 /* model map */
-const NODES=[
+var NODES=[
  {k:"data",l:"Application data",s:"Feature timing",t:["leak"],x:16,y:24,w:196,h:60},
  {k:"bureau",l:"Credit bureau files",s:"Source feed",t:[],x:16,y:196,w:196,h:60},
  {k:"vendor",l:"BureauVec v2",s:"Vendor embedding · 48 features",t:["vendor"],x:250,y:196,w:178,h:60},
@@ -476,8 +476,8 @@ const NODES=[
  {k:"notice",l:"Decline notices",s:"Reason codes",t:["aan"],x:1094,y:196,w:150,h:60},
  {k:"monitor",l:"Monitoring",s:"Triggers & owners",t:["monitor"],x:676,y:226,w:196,h:54},
  {k:"docs",l:"Model documentation",s:"140-page dossier",t:["docs"],x:468,y:226,w:168,h:54}];
-const EDGES=["M212,54 C330,54 350,140 468,140","M212,226 H250","M428,226 C452,226 446,140 468,140","M636,140 H676","M872,140 H912","M1062,130 C1080,130 1076,54 1094,54","M1169,84 V110","M1169,170 V196","M1094,160 C1010,256 960,253 872,253","M774,226 V180","M636,253 C658,253 660,200 690,180"];
-const SEVORD={H:3,M:2,L:1};
+var EDGES=["M212,54 C330,54 350,140 468,140","M212,226 H250","M428,226 C452,226 446,140 468,140","M636,140 H676","M872,140 H912","M1062,130 C1080,130 1076,54 1094,54","M1169,84 V110","M1169,170 V196","M1094,160 C1010,256 960,253 872,253","M774,226 V180","M636,253 C658,253 660,200 690,180"];
+var SEVORD={H:3,M:2,L:1};
 function nodeState(n){
   if(!n.t.length)return{c:"passive",b:""};
   if(S.phase==="report"){let worst=null;n.t.forEach(id=>{const s=trueSev(id);if(s&&(!worst||SEVORD[s]>SEVORD[worst]))worst=s});
@@ -488,7 +488,7 @@ function nodeState(n){
   n.t.forEach(id=>{if(S.run[id])run=true;const f=S.findings[id];if(f&&f.sev&&f.sev!=="X"&&(!worst||SEVORD[f.sev]>SEVORD[worst]))worst=f.sev;if(S.run[id]&&!S.ex[id])open=true;if(f&&!f.sev)open=true});
   if(worst)return{c:worst,b:worst};if(open)return{c:"review",b:"?"};if(run)return{c:"clear",b:"✓"};return{c:"idle",b:""};
 }
-let MAP_INTRO=true;
+var MAP_INTRO=true;
 function modelMap(){
   const report=S.phase==="report";
   let g=`<defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arw" d="M0,0 L10,5 L0,10 z"/></marker></defs>`;
@@ -517,11 +517,11 @@ function strip(id){
   return `<div class="strip"><div class="track" role="img" aria-label="${esc(m.label)} ${esc(m.fmt(v))}, ${zoneOf(id)} zone">${bands}<span class="pin" style="left:${Math.min(99.4,Math.max(.6,pos(v)))}%"></span></div><div class="cap">${esc(m.cap)}</div></div>`;
 }
 
-const GAME="app/index.html";
+var GAME="app/index.html";
 
 /* ---------- hero: live map demo ---------- */
 S=fresh(1);
-const DEMO=[
+var DEMO=[
  ["Mon","Opening validation file VR-2026-114",null,()=>{}],
  ["Mon","Feature timing review · 0 post-decision features","ok",()=>{S.run.leak=1;S.ex.leak="cleared"}],
  ["Tue","Disparate impact analysis · adverse impact ratio 0.84","M",()=>{S.run.fair=2;S.ex.fair="raised";S.findings.fair={sev:"M",day:2}}],
@@ -532,8 +532,8 @@ const DEMO=[
  ["Fri","Developer evidence holds up · disparate impact withdrawn","ok",()=>{S.findings.fair.sev="X";S.ex.fair="cleared"}],
  ["Fri","Opinion issued · return to developer","H",()=>{}]
 ];
-let step=0,timer=null,playing=true;
-const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+var step=0,timer=null,playing=true;
+var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 function drawHero(){document.getElementById("hero-map").innerHTML=modelMap().replace(/ data-node="[^"]*" role="button" tabindex="0"/g,"").replace(/<p class="maphint">[\s\S]*?<\/p>/,"<p class=\"maphint\">Illustrative review sequence · The active case starts in the validation room.</p>")}
 function showStep(i){const [d,m,sev]=DEMO[i];
   document.getElementById("tk-day").textContent=d;document.getElementById("tk-msg").textContent=m;
@@ -549,9 +549,9 @@ if(reduce){DEMO.forEach(s=>s[3]());step=DEMO.length-1;drawHero();showStep(step);
 document.addEventListener("visibilitychange",()=>{if(document.hidden)clearInterval(timer);else if(playing)play()});
 
 /* ---------- exhibit viewer ---------- */
-const VT=["drift","aan","fair","segment"];
-const VNAME={drift:"Population stability",aan:"Reason codes",fair:"Fair lending",segment:"Thin-file ROC"};
-let vt="aan",vz="watch";
+var VT=["drift","aan","fair","segment"];
+var VNAME={drift:"Population stability",aan:"Reason codes",fair:"Fair lending",segment:"Thin-file ROC"};
+var vt="aan",vz="watch";
 function readingVal(id,z){const m=D[id].m,r=m.r[z==="breach"?"severe":z==="ok"?"clean":"border"];let v=(r[0]+r[1])/2;return m.int?Math.round(v):+v.toFixed(m.dp)}
 function renderViewer(){
   document.getElementById("v-tabs").innerHTML=VT.map(id=>`<button type="button" data-vt="${id}" aria-pressed="${id===vt}">${VNAME[id]}</button>`).join("");
@@ -567,7 +567,7 @@ document.getElementById("v-reads").addEventListener("click",e=>{const b=e.target
 renderViewer();
 
 /* ---------- case dealer ---------- */
-const deckIds=["interview",...ORDER.slice(1)];
+var deckIds=["interview",...ORDER.slice(1)];
 function deal(seed,animate){
   const c=buildCase(seed),code=codeFrom(seed);
   const cnt={severe:0,mild:0,noisy:0,clean:0};Object.values(c.truth).forEach(s=>cnt[s]++);
@@ -580,12 +580,12 @@ function deal(seed,animate){
 }
 document.getElementById("deck").innerHTML=deckIds.map((id,i)=>{const t=id==="interview"?{test:"Developer interview",el:"Leads, not evidence"}:D[id];
   return `<div class="card ${id==="interview"?"interview":""}" style="--i:${i}"><div class="f"><em>${esc(t.el)}</em><b>${esc(t.test)}</b><span class="q">${id==="interview"?"“”":"?"}</span></div><div class="b" aria-hidden="true"></div></div>`}).join("");
-let dealSeed=seedFrom("K7QM");
+var dealSeed=seedFrom("K7QM");
 deal(dealSeed,false);
 document.getElementById("d-deal").addEventListener("click",()=>{dealSeed=newSeed();deal(dealSeed,true)});
 
 /* ---------- rebuttal ---------- */
-const RB=[{k:"spin",txt:D.fair.rb.spin,why:"This is an assertion about intent. Disparate impact is measured in outcomes, and the reply offers none. Hold the finding."},
+var RB=[{k:"spin",txt:D.fair.rb.spin,why:"This is an assertion about intent. Disparate impact is measured in outcomes, and the reply offers none. Hold the finding."},
           {k:"valid",txt:D.fair.rb.valid,why:"This reply attaches analysis you can rerun. If the controlled ratio holds at 0.97, the raw gap was credit factors. Withdraw."}];
 function renderRb(ans){
   document.getElementById("rbgrid").innerHTML=RB.map((r,i)=>{const st=ans&&ans.i===i?((ans.c==="withdraw")===(r.k==="valid")?"right":"wrong"):"";
