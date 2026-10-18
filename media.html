@@ -4,91 +4,135 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Media · ATLAS-7</title><meta name="description" content="Video walkthrough, infographics, slide deck and podcast for ATLAS-7 model validation simulation."><meta name="theme-color" content="#101211"><meta name="claude:viewport-fit-sides" content="cover"><link rel="icon" href="assets/favicon.svg"></head>
+<title>Media · ATLAS-7</title><meta name="description" content="Video, infographics, slide deck and podcast for ATLAS-7."><meta name="theme-color" content="#101211"><link rel="icon" href="assets/favicon.svg"></head>
 <body>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="assets/landing.css">
 <style>
-/* media page specific */
-.media-wrap{max-width:1100px;margin:0 auto;padding:0 clamp(22px,5.2vw,82px)}
+/* ——— MEDIA PAGE ——— */
+*{box-sizing:border-box}
+
+/* hero */
+.media-hero{position:relative;min-height:420px;display:flex;align-items:end;overflow:hidden;isolation:isolate;background:#0a110d;border-bottom:1px solid var(--rule)}
+.media-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:55% 40%;z-index:-3;opacity:.7}
+.media-hero:after{content:'';position:absolute;inset:0;z-index:-2;background:linear-gradient(0deg,#0a110dfa 0%,#0a110da0 40%,transparent 75%),linear-gradient(90deg,#0a110d 0%,transparent 50%)}
+.media-hero .inner{padding-block:60px 48px;position:relative}
+.media-hero .kicker{margin-bottom:16px}
+.media-hero h1{font-size:clamp(40px,5.5vw,72px);font-weight:450;letter-spacing:-.055em;line-height:1.05;color:var(--ink);margin:0}
+.media-hero h1 em{font-family:"Source Serif 4",Georgia,serif;font-weight:400;color:var(--gold)}
+.media-hero p{font-size:15px;color:var(--ink-2);max-width:520px;margin-top:18px;line-height:1.8}
+.media-hero .media-counts{display:flex;gap:32px;margin-top:28px;font:10px var(--f-mono);color:var(--ink-2)}
+.media-hero .media-counts b{display:block;font:450 32px var(--f-display);color:var(--gold);letter-spacing:-.03em;line-height:1.4}
 
 /* sections */
-.media-section{padding:68px 0;border-top:1px solid var(--rule)}
-.media-section:first-of-type{border-top:0;padding-top:40px}
-.section-head{margin-bottom:32px}
-.section-num{font:9px var(--f-mono);letter-spacing:.14em;color:var(--gold);display:block;margin-bottom:14px}
-.section-title{font-size:clamp(30px,4vw,48px);font-weight:450;letter-spacing:-.045em;line-height:1.1;color:var(--ink);margin:0}
-.section-desc{font-size:14px;color:var(--ink-2);line-height:1.8;max-width:600px;margin-top:14px}
+.media-wrap{max-width:1200px;margin:0 auto;padding-inline:clamp(22px,5.2vw,82px)}
+.msection{padding:clamp(56px,7vw,90px) 0;border-top:1px solid var(--rule)}
+.msection:first-of-type{border-top:0}
+.mhead{display:grid;grid-template-columns:1fr 1fr;gap:20px 56px;align-items:end;margin-bottom:clamp(28px,4vw,44px)}
+.mnum{font:9px var(--f-mono);letter-spacing:.15em;color:var(--gold);display:block;margin-bottom:14px}
+.mtitle{font-size:clamp(28px,3.6vw,48px);font-weight:450;letter-spacing:-.045em;line-height:1.1;color:var(--ink);margin:0}
+.mdesc{font-size:13px;color:var(--ink-2);line-height:1.85;max-width:440px}
 
-/* video */
-.video-stage{position:relative;width:100%;padding-bottom:56.25%;background:#000;border-radius:6px;overflow:hidden;box-shadow:0 30px 80px #0003}
-.video-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+/* —— 01 VIDEO —— */
+.cinema{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 40px 100px #0004,0 0 0 1px var(--rule)}
+.cinema:before{content:'';position:absolute;inset:-1px;border-radius:9px;border:1px solid #ffffff08;pointer-events:none;z-index:1}
+.cinema-ratio{position:relative;padding-bottom:56.25%;background:#000}
+.cinema-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.cinema-strip{display:flex;justify-content:space-between;padding:14px 22px;background:#111911;border-top:1px solid #2a3a2e;font:9px var(--f-mono);color:var(--ink-2)}
 
-/* infographics carousel */
-.carousel{position:relative;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:#141c17}
-.carousel-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-.carousel-slide{min-width:100%;display:grid;grid-template-rows:auto 1fr}
-.carousel-slide img{width:100%;display:block}
-.carousel-caption{padding:24px 28px;min-height:120px}
-.carousel-caption .cap-num{font:9px var(--f-mono);color:var(--gold);letter-spacing:.1em}
-.carousel-caption h3{font-size:22px;font-weight:450;letter-spacing:-.03em;margin:8px 0;color:var(--ink)}
-.carousel-caption p{font-size:13px;color:var(--ink-2);line-height:1.8;max-width:640px}
-.carousel-nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;border-top:1px solid var(--rule);background:#0f170f}
-.carousel-dots{display:flex;gap:8px}
-.carousel-dots button{width:8px;height:8px;border-radius:50%;border:1px solid var(--rule);background:transparent;padding:0;cursor:pointer;transition:background .2s,border-color .2s}
-.carousel-dots button.active{background:var(--gold);border-color:var(--gold)}
-.carousel-arrows{display:flex;gap:10px}
-.carousel-arrows button{background:transparent;border:1px solid var(--rule);color:var(--ink-2);width:40px;height:40px;border-radius:4px;font-size:18px;cursor:pointer;display:grid;place-items:center;transition:color .2s,border-color .2s}
-.carousel-arrows button:hover{color:var(--gold);border-color:var(--gold)}
+/* —— 02 GALLERY —— */
+.gallery-stage{position:relative;border-radius:8px;overflow:hidden;background:#0c130e;border:1px solid var(--rule);box-shadow:0 30px 80px #0003}
+.gallery-img-wrap{position:relative;overflow:hidden;background:#111;min-height:300px;cursor:pointer}
+.gallery-img-wrap img{width:100%;display:block;transition:opacity .45s ease}
+.gallery-img-wrap img.loading{opacity:0}
+.gallery-caption{padding:clamp(20px,3vw,32px);display:grid;grid-template-columns:1fr auto;gap:16px 28px;align-items:start;border-top:1px solid var(--rule);background:linear-gradient(155deg,#1a2218,#0f170f)}
+.gallery-caption h3{font-size:clamp(18px,2.2vw,26px);font-weight:450;letter-spacing:-.03em;color:var(--ink);margin:0}
+.gallery-counter{font:9px var(--f-mono);color:var(--gold);letter-spacing:.1em;white-space:nowrap;padding-top:6px}
+.gallery-caption p{grid-column:1/-1;font-size:13px;color:var(--ink-2);line-height:1.85;max-width:720px}
+.gallery-controls{display:flex;align-items:center;justify-content:space-between;padding:14px clamp(20px,3vw,32px);background:#0b130d;border-top:1px solid #1e2a1c}
+.gallery-dots{display:flex;gap:6px;flex-wrap:wrap}
+.gallery-dots button{width:32px;height:3px;border:0;background:#2a3a2e;padding:0;cursor:pointer;border-radius:2px;transition:background .25s}
+.gallery-dots button.active{background:var(--gold)}
+.gallery-arrows{display:flex;gap:8px}
+.gallery-arrows button{width:44px;height:44px;border:1px solid #2a3a2e;border-radius:50%;background:transparent;color:var(--ink-2);font-size:18px;cursor:pointer;display:grid;place-items:center;transition:all .2s}
+.gallery-arrows button:hover{color:var(--gold);border-color:var(--gold);background:#d6a47b0a}
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:100;background:#050a07f2;backdrop-filter:blur(20px);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox img{max-width:92vw;max-height:88vh;border-radius:6px;box-shadow:0 20px 80px #0008;cursor:zoom-out}
+.lightbox-close{position:absolute;top:20px;right:24px;background:none;border:0;color:var(--ink);font-size:32px;cursor:pointer;z-index:2}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:none;border:1px solid #ffffff30;color:#fff;width:50px;height:50px;border-radius:50%;font-size:22px;cursor:pointer;display:grid;place-items:center;transition:border-color .2s}
+.lightbox-nav:hover{border-color:var(--gold);color:var(--gold)}
+.lightbox-prev{left:20px}
+.lightbox-next{right:20px}
 
-/* PDF viewer */
-.deck-viewer{border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:#0c120d}
-.deck-canvas-wrap{position:relative;display:grid;place-items:center;min-height:400px;background:#111911;cursor:grab}
-.deck-canvas-wrap canvas{max-width:100%;max-height:70vh;display:block}
-.deck-controls{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-top:1px solid var(--rule);background:#0f170f}
-.deck-controls button{background:transparent;border:1px solid var(--rule);color:var(--ink-2);padding:10px 18px;border-radius:4px;font:12px var(--f-display);cursor:pointer;transition:color .2s,border-color .2s}
-.deck-controls button:hover:not(:disabled){color:var(--gold);border-color:var(--gold)}
-.deck-controls button:disabled{opacity:.3;cursor:not-allowed}
-.deck-page{font:11px var(--f-mono);color:var(--ink-2)}
-.deck-download{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font:12px var(--f-display);color:var(--gold);border:1px solid currentColor;padding:10px 18px;border-radius:4px;transition:background .2s}
-.deck-download:hover{background:rgba(214,164,123,.08)}
-.deck-fallback{padding:60px 24px;text-align:center;color:var(--ink-2);font-size:14px}
-.deck-fallback a{color:var(--gold)}
+/* —— 03 DECK —— */
+.deck{position:relative;border-radius:8px;overflow:hidden;background:#0c130e;border:1px solid var(--rule);box-shadow:0 30px 80px #0003}
+.deck-stage{position:relative;background:#111911;display:grid;place-items:center;min-height:200px;padding:clamp(16px,3vw,40px)}
+.deck-stage img{width:100%;max-width:1000px;border-radius:4px;box-shadow:0 12px 50px #0005;transition:opacity .35s ease;display:block}
+.deck-stage img.loading{opacity:0}
+.deck-bar{display:flex;align-items:center;justify-content:space-between;padding:14px clamp(16px,3vw,32px);background:#0b130d;border-top:1px solid #1e2a1c;gap:12px;flex-wrap:wrap}
+.deck-bar button{background:transparent;border:1px solid #2a3a2e;color:var(--ink-2);padding:10px 20px;border-radius:4px;font:12px var(--f-display);font-weight:500;cursor:pointer;transition:all .2s}
+.deck-bar button:hover:not(:disabled){color:var(--gold);border-color:var(--gold)}
+.deck-bar button:disabled{opacity:.25;cursor:not-allowed}
+.deck-pager{font:10px var(--f-mono);color:var(--ink-2);letter-spacing:.06em}
+.deck-pips{display:flex;gap:3px;flex:1;max-width:400px;margin:0 16px}
+.deck-pips i{flex:1;height:2px;background:#2a3a2e;border-radius:1px;transition:background .2s}
+.deck-pips i.done{background:var(--gold)}
+.deck-dl{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font:11px var(--f-mono);color:var(--gold);padding:10px 18px;border:1px solid var(--gold);border-radius:4px;transition:background .2s;letter-spacing:.04em}
+.deck-dl:hover{background:#d6a47b12}
 
-/* podcast */
-.podcast-player{border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:linear-gradient(145deg,#1a2218,#0f170f);padding:36px 32px;display:grid;grid-template-columns:80px 1fr;gap:28px;align-items:start}
-.podcast-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#a07048);display:grid;place-items:center;box-shadow:0 8px 30px rgba(214,164,123,.15)}
-.podcast-icon svg{width:36px;height:36px;color:#141c17}
-.podcast-meta .pod-label{font:8px var(--f-mono);letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
-.podcast-meta h3{font-size:24px;font-weight:450;letter-spacing:-.03em;color:var(--ink);margin:10px 0 6px}
-.podcast-meta .pod-host{font:11px var(--f-mono);color:var(--ink-2);margin-bottom:18px}
-.podcast-meta .pod-desc{font-size:13px;color:var(--ink-2);line-height:1.8;max-width:550px;margin-bottom:22px}
-.pod-controls{display:flex;align-items:center;gap:16px}
-.pod-play{width:48px;height:48px;border-radius:50%;background:var(--gold);border:0;color:#141c17;cursor:pointer;display:grid;place-items:center;transition:transform .2s,background .2s;flex-shrink:0}
-.pod-play:hover{transform:scale(1.06);background:#e6ba95}
-.pod-play svg{width:20px;height:20px;margin-left:2px}
-.pod-progress-wrap{flex:1;display:grid;gap:6px}
-.pod-bar{width:100%;height:4px;background:#2a3a2e;border-radius:2px;cursor:pointer;position:relative;overflow:hidden}
-.pod-bar-fill{height:100%;background:var(--gold);border-radius:2px;width:0;transition:width .2s linear}
+/* —— 04 PODCAST —— */
+.pod{position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 30px 80px #0003;isolation:isolate}
+.pod-bg{position:absolute;inset:0;z-index:-2}
+.pod-bg img{width:100%;height:100%;object-fit:cover;object-position:55% 55%;opacity:.5}
+.pod-bg:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,#0a110df5 0%,#0a110dc0 50%,#0a110d90)}
+.pod-inner{padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,4vw,44px);align-items:start}
+.pod-icon{width:clamp(64px,8vw,96px);height:clamp(64px,8vw,96px);border-radius:50%;background:linear-gradient(145deg,var(--gold),#8a5e38);display:grid;place-items:center;box-shadow:0 12px 40px #d6a47b25,0 0 0 1px #d6a47b30}
+.pod-icon svg{width:40%;height:40%;color:#101211}
+.pod-label{font:8px var(--f-mono);letter-spacing:.16em;color:var(--gold)}
+.pod-title{font-size:clamp(22px,3vw,34px);font-weight:450;letter-spacing:-.035em;color:var(--ink);margin:12px 0 6px;line-height:1.2}
+.pod-host{font:11px var(--f-mono);color:var(--ink-2);margin-bottom:16px}
+.pod-desc{font-size:13px;color:var(--ink-2);line-height:1.85;max-width:560px;margin-bottom:28px}
+.pod-controls{display:flex;align-items:center;gap:18px}
+.pod-play{width:56px;height:56px;border-radius:50%;background:var(--gold);border:0;color:#101211;cursor:pointer;display:grid;place-items:center;transition:transform .2s,box-shadow .2s;flex-shrink:0;box-shadow:0 6px 24px #d6a47b30}
+.pod-play:hover{transform:scale(1.06);box-shadow:0 8px 32px #d6a47b40}
+.pod-play svg{width:22px;height:22px;margin-left:2px}
+.pod-progress{flex:1;display:grid;gap:8px}
+.pod-track{width:100%;height:4px;background:#2a3a2e;border-radius:2px;cursor:pointer;position:relative;overflow:hidden}
+.pod-track:hover{height:6px}
+.pod-fill{height:100%;background:linear-gradient(90deg,var(--gold),#e6c9a0);border-radius:2px;width:0;transition:width .2s linear}
 .pod-times{display:flex;justify-content:space-between;font:9px var(--f-mono);color:var(--ink-2)}
+.pod-wave{display:flex;align-items:end;gap:2px;height:32px;margin-bottom:8px}
+.pod-wave i{flex:1;background:var(--gold);opacity:.15;border-radius:1px 1px 0 0;transition:opacity .3s}
+.pod-wave i.active{opacity:.6}
+.pod-wave i.played{opacity:.35}
 
-@media(max-width:800px){
-  .podcast-player{grid-template-columns:1fr;gap:20px;padding:28px 24px}
-  .podcast-icon{width:60px;height:60px}
-  .podcast-icon svg{width:28px;height:28px}
-  .section-title{font-size:32px}
-  .carousel-caption{padding:20px}
-  .carousel-nav{padding:14px 20px}
+@media(max-width:900px){
+  .media-hero{min-height:340px}
+  .mhead{grid-template-columns:1fr;gap:16px}
+  .gallery-caption{grid-template-columns:1fr}
+  .gallery-counter{justify-self:start;padding:0}
+  .pod-inner{grid-template-columns:1fr;gap:20px}
+  .pod-icon{width:60px;height:60px}
+  .lightbox-nav{width:40px;height:40px;font-size:18px}
+  .lightbox-prev{left:10px}
+  .lightbox-next{right:10px}
 }
-@media(max-width:480px){
-  .media-section{padding:48px 0}
-  .podcast-player{padding:22px 18px}
-  .carousel-caption h3{font-size:19px}
-  .deck-controls{flex-wrap:wrap;gap:12px}
+@media(max-width:560px){
+  .media-hero{min-height:280px}
+  .media-hero h1{font-size:36px}
+  .media-hero .media-counts{gap:20px}
+  .media-hero .media-counts b{font-size:26px}
+  .cinema-strip{display:none}
+  .gallery-arrows button{width:38px;height:38px}
+  .deck-pips{display:none}
+  .pod-controls{flex-wrap:wrap}
+  .pod-wave{display:none}
 }
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
 <header class="top"><div class="inner">
@@ -96,162 +140,181 @@
   <nav><a href="index.html">Home</a><a href="media.html" aria-current="page">Media</a><a class="cta sm" href="app/index.html">Enter the simulation <span class="arr">↗</span></a></nav>
 </div></header>
 
-<div class="media-wrap">
-
-<!-- 01 VIDEO -->
-<section class="media-section">
-  <div class="section-head">
-    <span class="section-num">01 / VIDEO WALKTHROUGH</span>
-    <h1 class="section-title">See it in action.</h1>
-    <p class="section-desc">A full walkthrough of the ATLAS-7 validation simulation — from opening the case file to the committee memo.</p>
-  </div>
-  <div class="video-stage">
-    <iframe src="https://www.youtube.com/embed/i-wR3-uaoh8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-  </div>
-</section>
-
-<!-- 02 INFOGRAPHICS -->
-<section class="media-section">
-  <div class="section-head">
-    <span class="section-num">02 / INFOGRAPHICS</span>
-    <h2 class="section-title">The system, visualised.</h2>
-    <p class="section-desc">Six views into the mechanics of model risk validation. Navigate with the arrows or select a card directly.</p>
-  </div>
-  <div class="carousel" id="carousel">
-    <div class="carousel-track" id="carousel-track"></div>
-    <div class="carousel-nav">
-      <div class="carousel-dots" id="carousel-dots"></div>
-      <div class="carousel-arrows">
-        <button id="carousel-prev" aria-label="Previous infographic">&#8592;</button>
-        <button id="carousel-next" aria-label="Next infographic">&#8594;</button>
-      </div>
+<!-- HERO -->
+<section class="media-hero">
+  <img src="assets/evidence-landscape.webp" alt="" fetchpriority="high">
+  <div class="inner">
+    <div class="kicker"><span class="status-dot"></span> MEDIA &amp; RESOURCES</div>
+    <h1>The evidence<br>speaks <em>for itself.</em></h1>
+    <p>Video walkthrough, infographics, the full slide deck, and a podcast on what effective challenge actually looks like under pressure.</p>
+    <div class="media-counts">
+      <div><b>01</b>Video</div>
+      <div><b>06</b>Infographics</div>
+      <div><b>16</b>Slides</div>
+      <div><b>01</b>Podcast</div>
     </div>
   </div>
 </section>
 
-<!-- 03 SLIDE DECK -->
-<section class="media-section">
-  <div class="section-head">
-    <span class="section-num">03 / SLIDE DECK</span>
-    <h2 class="section-title">The pitch, page by page.</h2>
-    <p class="section-desc">Sixteen slides covering what ATLAS-7 is, who it is for, and why it matters. Navigate with arrows or keyboard.</p>
+<div class="media-wrap">
+
+<!-- 01 VIDEO -->
+<section class="msection" id="video">
+  <div class="mhead"><div><span class="mnum">01 / VIDEO</span><h2 class="mtitle">Watch the full<br>walkthrough.</h2></div><p class="mdesc">From opening the case file to the committee memo — a complete run through the ATLAS-7 validation simulation.</p></div>
+  <div class="cinema">
+    <div class="cinema-ratio"><iframe src="https://www.youtube.com/embed/i-wR3-uaoh8?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+    <div class="cinema-strip"><span>ATLAS-7 · VIDEO WALKTHROUGH</span><span>FULL SIMULATION RUN</span></div>
   </div>
-  <div class="deck-viewer">
-    <div class="deck-canvas-wrap" id="deck-wrap"><canvas id="deck-canvas"></canvas><div class="deck-fallback" id="deck-fallback" hidden><p>Loading slides...</p></div></div>
-    <div class="deck-controls">
-      <button id="deck-prev" disabled>&#8592; Previous</button>
-      <span class="deck-page" id="deck-page">1 / 16</span>
-      <button id="deck-next" disabled>Next &#8594;</button>
-      <a class="deck-download" href="assets/media/atlas7-deck.pdf" download>&#8595; Download PDF</a>
+</section>
+
+<!-- 02 INFOGRAPHICS -->
+<section class="msection" id="infographics">
+  <div class="mhead"><div><span class="mnum">02 / INFOGRAPHICS</span><h2 class="mtitle">The system,<br>visualised.</h2></div><p class="mdesc">Six original infographics covering the validation lifecycle, scoring mechanics, regulatory landscape, and decision framework. Click to expand.</p></div>
+  <div class="gallery-stage" id="gallery">
+    <div class="gallery-img-wrap" id="gallery-img-wrap"><img id="gallery-img" alt=""></div>
+    <div class="gallery-caption"><div><h3 id="gallery-title"></h3></div><span class="gallery-counter" id="gallery-counter"></span><p id="gallery-desc"></p></div>
+    <div class="gallery-controls"><div class="gallery-dots" id="gallery-dots"></div><div class="gallery-arrows"><button id="gal-prev" aria-label="Previous">&#8592;</button><button id="gal-next" aria-label="Next">&#8594;</button></div></div>
+  </div>
+</section>
+
+<!-- 03 DECK -->
+<section class="msection" id="deck-section">
+  <div class="mhead"><div><span class="mnum">03 / SLIDE DECK</span><h2 class="mtitle">The pitch,<br>page by page.</h2></div><p class="mdesc">Sixteen slides. The problem, the simulation, the scoring, and the audience. Navigate with arrows or download the full PDF.</p></div>
+  <div class="deck" id="deck">
+    <div class="deck-stage"><img id="deck-img" src="assets/media/slides/slide-01.jpg" alt="Slide 1 of 16"></div>
+    <div class="deck-bar">
+      <button id="dk-prev" disabled>&#8592; Prev</button>
+      <div class="deck-pips" id="deck-pips"></div>
+      <span class="deck-pager" id="deck-pager">01 / 16</span>
+      <button id="dk-next">Next &#8594;</button>
+      <a class="deck-dl" href="assets/media/atlas7-deck.pdf" download>&#8595; PDF</a>
     </div>
   </div>
 </section>
 
 <!-- 04 PODCAST -->
-<section class="media-section">
-  <div class="section-head">
-    <span class="section-num">04 / PODCAST</span>
-    <h2 class="section-title">The Model Risk Minute.</h2>
-    <p class="section-desc">A deep-dive briefing on model risk validation — the five-day review, the evidence that matters, and the judgment calls that separate examiners from rubber stamps.</p>
-  </div>
-  <div class="podcast-player" id="podcast">
-    <div class="podcast-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="23"/><line x1="8" x2="16" y1="23" y2="23"/></svg></div>
-    <div class="podcast-meta">
-      <span class="pod-label">ATLAS-7 Podcast</span>
-      <h3>Five Days to Audit Credit AI</h3>
-      <p class="pod-host">Richard LeClezio</p>
-      <p class="pod-desc">A deep dive into model risk validation under pressure — the five-day review, the evidence that matters, the developer pushback, and the decision that goes to committee. How ATLAS-7 trains the judgment that separates examiners from rubber stamps.</p>
-      <div class="pod-controls">
-        <button class="pod-play" id="pod-play" aria-label="Play podcast"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,3 20,12 6,21"/></svg></button>
-        <div class="pod-progress-wrap">
-          <div class="pod-bar" id="pod-bar"><div class="pod-bar-fill" id="pod-fill"></div></div>
-          <div class="pod-times"><span id="pod-current">0:00</span><span id="pod-duration">0:00</span></div>
+<section class="msection" id="podcast">
+  <div class="mhead"><div><span class="mnum">04 / PODCAST</span><h2 class="mtitle">The Model Risk<br>Minute.</h2></div><p class="mdesc">A briefing on model risk validation under pressure — the five-day review, the evidence that matters, and the judgment calls that define effective challenge.</p></div>
+  <div class="pod">
+    <div class="pod-bg"><img src="assets/committee-room.webp" alt=""></div>
+    <div class="pod-inner">
+      <div class="pod-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="23"/><line x1="8" x2="16" y1="23" y2="23"/></svg></div>
+      <div>
+        <span class="pod-label">ATLAS-7 PODCAST</span>
+        <h3 class="pod-title">Five Days to Audit Credit AI</h3>
+        <p class="pod-host">Richard LeClezio</p>
+        <p class="pod-desc">SR 11-7 says effective challenge means the ability to identify limitations and produce accurate findings. The real test is whether you can hold that finding when the developer pushes back, the business says launch is Monday, and the CRO's office asks if this needs committee.</p>
+        <div class="pod-wave" id="pod-wave"></div>
+        <div class="pod-controls">
+          <button class="pod-play" id="pod-play" aria-label="Play"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,3 20,12 6,21"/></svg></button>
+          <div class="pod-progress">
+            <div class="pod-track" id="pod-track"><div class="pod-fill" id="pod-fill"></div></div>
+            <div class="pod-times"><span id="pod-cur">0:00</span><span id="pod-dur">0:00</span></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <audio id="podcast-audio" preload="none" src="assets/media/podcast-full.m4a"></audio>
+  <audio id="pod-audio" preload="none" src="assets/media/podcast-full.m4a"></audio>
 </section>
 
 </div>
 
-<footer class="foot"><div class="inner"><span><b>ATLAS-7</b> · A training simulator from The Studio · All institutions, models, thresholds and outcomes are fictional.</span><span>A Richard LeClezio experience</span></div></footer>
+<footer class="foot"><div class="inner"><span><b>ATLAS-7</b> · A training simulator · All institutions, models, thresholds and outcomes are fictional.</span><span>A Richard LeClezio experience</span></div></footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lb-close" aria-label="Close">&times;</button>
+  <button class="lightbox-nav lightbox-prev" id="lb-prev" aria-label="Previous">&#8592;</button>
+  <img id="lb-img" alt="">
+  <button class="lightbox-nav lightbox-next" id="lb-next" aria-label="Next">&#8594;</button>
+</div>
+
 <script>
-// PDF viewer
+// ——— GALLERY ———
 (function(){
-  if(typeof pdfjsLib==='undefined'){document.getElementById('deck-fallback').hidden=false;document.getElementById('deck-fallback').innerHTML='<p>PDF viewer could not load. <a href="assets/media/atlas7-deck.pdf" style="color:var(--gold)">Download the deck instead.</a></p>';return}
-  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-  var cv=document.getElementById('deck-canvas'),ctx=cv.getContext('2d');
-  var pdf=null,pageNum=1,rendering=false;
-  function renderPage(n){
-    if(!pdf||rendering)return;rendering=true;
-    pdf.getPage(n).then(function(page){
-      var scale=2;
-      var vp=page.getViewport({scale:scale});
-      cv.width=vp.width;cv.height=vp.height;
-      cv.style.width=Math.min(vp.width/scale,cv.parentElement.clientWidth-40)+'px';
-      page.render({canvasContext:ctx,viewport:vp}).promise.then(function(){
-        document.getElementById('deck-page').textContent=n+' / '+pdf.numPages;
-        document.getElementById('deck-prev').disabled=n<=1;
-        document.getElementById('deck-next').disabled=n>=pdf.numPages;
-        document.getElementById('deck-canvas').hidden=false;
-        document.getElementById('deck-fallback').hidden=true;
-        rendering=false;
-      });
-    }).catch(function(e){console.error('PDF render error',e);rendering=false});
-  }
-  pdfjsLib.getDocument('assets/media/atlas7-deck.pdf').promise.then(function(p){
-    pdf=p;renderPage(1);
-  }).catch(function(e){
-    console.error('PDF load error',e);
-    document.getElementById('deck-fallback').hidden=false;
-    document.getElementById('deck-fallback').innerHTML='<p>Could not load PDF. <a href="assets/media/atlas7-deck.pdf" style="color:var(--gold)">Download instead.</a></p>';
-  });
-  document.getElementById('deck-prev').addEventListener('click',function(){if(pageNum>1){pageNum--;renderPage(pageNum)}});
-  document.getElementById('deck-next').addEventListener('click',function(){if(pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
-  document.addEventListener('keydown',function(e){if(e.target.tagName==='INPUT')return;if(e.key==='ArrowLeft'&&pageNum>1){pageNum--;renderPage(pageNum)}else if(e.key==='ArrowRight'&&pdf&&pageNum<pdf.numPages){pageNum++;renderPage(pageNum)}});
-})();
-</script>
-
-<script>
-// Infographics carousel
-(()=>{
-const slides=[
+var slides=[
   {img:'assets/media/infographic-01.jpg',title:'Inside the Validation Room',desc:'The complete system map — governing regulatory standards, the five-day validation timeline, evidence and signal evaluation, the 100-point scoring rubric, and how findings flow into the committee memorandum.'},
   {img:'assets/media/infographic-02.jpg',title:'Model Risk Simulation Overview',desc:'From Monday briefing to Friday opinion — the full simulation lifecycle. How 212 features and 31,000 monthly decisions flow through vendor engagement, regulatory escalation, and the final committee memorandum.'},
-  {img:'assets/media/infographic-03.jpg',title:'The Validation Room — Model Risk Simulation',desc:'The 5-day lifecycle under a 40-hour budget. Scoring breakdown and performance tiers, evidence mechanics and signal detection, the model defect findings framework, and target user profiles.'},
+  {img:'assets/media/infographic-03.jpg',title:'Model Risk Simulation',desc:'The 5-day lifecycle under a 40-hour budget. Scoring breakdown and performance tiers, evidence mechanics and signal detection, the model defect findings framework, and target user profiles.'},
   {img:'assets/media/infographic-04.jpg',title:'Model Risk Under Pressure',desc:'A high-volume automated credit scoring model under review. The five-day journey from initial brief through business pushback, vendor offers, regulatory oversight, and the developer challenge — with the decision matrix, scoring brackets, and governance framework.'},
-  {img:'assets/media/infographic-05.jpg',title:'Model Risk Challenge Simulation',desc:'Core constraints, the 5-day validation timeline, evidence mechanics and threshold bands, scoring rubric and grading performance, performance grading tiers, and the regulatory frameworks and standards that underpin every finding.'},
+  {img:'assets/media/infographic-05.jpg',title:'Challenge Simulation Overview',desc:'Core constraints, the 5-day validation timeline, evidence mechanics and threshold bands, scoring rubric and grading performance, and the regulatory frameworks that underpin every finding.'},
   {img:'assets/media/infographic-06.jpg',title:'Governance Evaluation Workflow',desc:'Eight panels covering each review day, the developer challenge, signal versus noise evaluation, the final memorandum and scoring matrix, and the governance and regulatory framework — from SR 11-7 to the EU AI Act.'}
 ];
-const track=document.getElementById('carousel-track'),dots=document.getElementById('carousel-dots');
-let idx=0;
-track.innerHTML=slides.map((s,i)=>`<div class="carousel-slide"><img src="${s.img}" alt="${s.title}" loading="${i?'lazy':'eager'}"><div class="carousel-caption"><span class="cap-num">${String(i+1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')}</span><h3>${s.title}</h3><p>${s.desc}</p></div></div>`).join('');
-dots.innerHTML=slides.map((_,i)=>`<button data-idx="${i}" class="${i===0?'active':''}" aria-label="Go to infographic ${i+1}"></button>`).join('');
-function go(n){idx=Math.max(0,Math.min(slides.length-1,n));track.style.transform=`translateX(-${idx*100}%)`;dots.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('active',i===idx))}
-document.getElementById('carousel-prev').addEventListener('click',()=>go(idx-1));
-document.getElementById('carousel-next').addEventListener('click',()=>go(idx+1));
-dots.addEventListener('click',e=>{const b=e.target.closest('[data-idx]');if(b)go(+b.dataset.idx)});
-let sx=0;track.addEventListener('pointerdown',e=>{sx=e.clientX});track.addEventListener('pointerup',e=>{const dx=e.clientX-sx;if(Math.abs(dx)>40)go(idx+(dx<0?1:-1))});
+var idx=0,img=document.getElementById('gallery-img'),title=document.getElementById('gallery-title'),desc=document.getElementById('gallery-desc'),counter=document.getElementById('gallery-counter'),dots=document.getElementById('gallery-dots');
+dots.innerHTML=slides.map(function(_,i){return '<button data-i="'+i+'" class="'+(i===0?'active':'')+'" aria-label="Infographic '+(i+1)+'"></button>'}).join('');
+function show(n){
+  idx=Math.max(0,Math.min(slides.length-1,n));
+  img.classList.add('loading');
+  img.onload=function(){img.classList.remove('loading')};
+  img.src=slides[idx].img;img.alt=slides[idx].title;
+  title.textContent=slides[idx].title;desc.textContent=slides[idx].desc;
+  counter.textContent=String(idx+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+  dots.querySelectorAll('button').forEach(function(b,i){b.classList.toggle('active',i===idx)});
+}
+show(0);
+document.getElementById('gal-prev').addEventListener('click',function(){show(idx-1)});
+document.getElementById('gal-next').addEventListener('click',function(){show(idx+1)});
+dots.addEventListener('click',function(e){var b=e.target.closest('[data-i]');if(b)show(+b.dataset.i)});
+var sx=0;document.getElementById('gallery-img-wrap').addEventListener('pointerdown',function(e){sx=e.clientX});
+document.getElementById('gallery-img-wrap').addEventListener('pointerup',function(e){var dx=e.clientX-sx;if(Math.abs(dx)>50)show(idx+(dx<0?1:-1))});
+
+// lightbox
+var lb=document.getElementById('lightbox'),lbImg=document.getElementById('lb-img');
+document.getElementById('gallery-img-wrap').addEventListener('click',function(e){if(Math.abs(e.clientX-sx)<5){lbImg.src=slides[idx].img;lbImg.alt=slides[idx].title;lb.classList.add('open')}});
+document.getElementById('lb-close').addEventListener('click',function(){lb.classList.remove('open')});
+lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('open')});
+document.getElementById('lb-prev').addEventListener('click',function(e){e.stopPropagation();show(idx-1);lbImg.src=slides[idx].img});
+document.getElementById('lb-next').addEventListener('click',function(e){e.stopPropagation();show(idx+1);lbImg.src=slides[idx].img});
+document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')lb.classList.remove('open');if(e.key==='ArrowLeft'){show(idx-1);lbImg.src=slides[idx].img}if(e.key==='ArrowRight'){show(idx+1);lbImg.src=slides[idx].img}});
+window._galShow=show;window._galIdx=function(){return idx};window._galSlides=slides;
 })();
 
-// Podcast player
-(()=>{
-const audio=document.getElementById('podcast-audio'),btn=document.getElementById('pod-play'),bar=document.getElementById('pod-bar'),fill=document.getElementById('pod-fill'),cur=document.getElementById('pod-current'),dur=document.getElementById('pod-duration');
-const fmt=s=>{const m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+String(r).padStart(2,'0')};
-let playing=false;
-btn.addEventListener('click',()=>{
+// ——— DECK ———
+(function(){
+var total=16,page=1,img=document.getElementById('deck-img'),pips=document.getElementById('deck-pips');
+pips.innerHTML=Array.from({length:total},function(_,i){return '<i'+(i===0?' class="done"':'')+' data-p="'+(i+1)+'"></i>'}).join('');
+function go(n){
+  page=Math.max(1,Math.min(total,n));
+  img.classList.add('loading');
+  img.onload=function(){img.classList.remove('loading')};
+  img.src='assets/media/slides/slide-'+String(page).padStart(2,'0')+'.jpg';
+  img.alt='Slide '+page+' of '+total;
+  document.getElementById('deck-pager').textContent=String(page).padStart(2,'0')+' / '+total;
+  document.getElementById('dk-prev').disabled=page<=1;
+  document.getElementById('dk-next').disabled=page>=total;
+  pips.querySelectorAll('i').forEach(function(p,i){p.classList.toggle('done',i<page)});
+}
+document.getElementById('dk-prev').addEventListener('click',function(){go(page-1)});
+document.getElementById('dk-next').addEventListener('click',function(){go(page+1)});
+document.addEventListener('keydown',function(e){if(document.getElementById('lightbox').classList.contains('open'))return;if(e.key==='ArrowLeft')go(page-1);if(e.key==='ArrowRight')go(page+1)});
+})();
+
+// ——— PODCAST ———
+(function(){
+var audio=document.getElementById('pod-audio'),btn=document.getElementById('pod-play'),track=document.getElementById('pod-track'),fill=document.getElementById('pod-fill'),cur=document.getElementById('pod-cur'),dur=document.getElementById('pod-dur'),wave=document.getElementById('pod-wave');
+var playing=false,bars=60;
+// generate waveform bars
+var html='';for(var i=0;i<bars;i++){var h=12+Math.round(Math.sin(i*.4)*8+Math.random()*12);html+='<i style="height:'+h+'px"></i>'}
+wave.innerHTML=html;
+var waveEls=wave.querySelectorAll('i');
+function fmt(s){var m=Math.floor(s/60),r=Math.floor(s%60);return m+':'+String(r).padStart(2,'0')}
+btn.addEventListener('click',function(){
   if(playing){audio.pause();btn.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>';playing=false}
   else{audio.play();btn.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>';playing=true}
 });
-audio.addEventListener('loadedmetadata',()=>{dur.textContent=fmt(audio.duration)});
-audio.addEventListener('timeupdate',()=>{if(audio.duration){fill.style.width=(audio.currentTime/audio.duration*100)+'%';cur.textContent=fmt(audio.currentTime)}});
-audio.addEventListener('ended',()=>{playing=false;btn.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>';fill.style.width='0'});
-bar.addEventListener('click',e=>{if(audio.duration){const r=e.offsetX/bar.offsetWidth;audio.currentTime=r*audio.duration}});
+audio.addEventListener('loadedmetadata',function(){dur.textContent=fmt(audio.duration)});
+audio.addEventListener('timeupdate',function(){
+  if(!audio.duration)return;
+  var pct=audio.currentTime/audio.duration;
+  fill.style.width=(pct*100)+'%';
+  cur.textContent=fmt(audio.currentTime);
+  var active=Math.floor(pct*bars);
+  waveEls.forEach(function(el,i){el.classList.toggle('played',i<active);el.classList.toggle('active',i===active)});
+});
+audio.addEventListener('ended',function(){playing=false;btn.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,3 20,12 6,21"/></svg>';fill.style.width='0';waveEls.forEach(function(el){el.classList.remove('played','active')})});
+track.addEventListener('click',function(e){if(audio.duration){audio.currentTime=(e.offsetX/track.offsetWidth)*audio.duration}});
 })();
 </script>
-
 </body>
 </html>
