@@ -115,7 +115,7 @@
   <div class="section-head">
     <span class="section-num">02 / INFOGRAPHICS</span>
     <h2 class="section-title">The system, visualised.</h2>
-    <p class="section-desc">Eight views into the mechanics of model risk validation. Navigate with the arrows or select a card directly.</p>
+    <p class="section-desc">Six views into the mechanics of model risk validation. Navigate with the arrows or select a card directly.</p>
   </div>
   <div class="carousel" id="carousel">
     <div class="carousel-track" id="carousel-track"></div>
@@ -134,13 +134,13 @@
   <div class="section-head">
     <span class="section-num">03 / SLIDE DECK</span>
     <h2 class="section-title">The pitch, page by page.</h2>
-    <p class="section-desc">Ten slides covering what ATLAS-7 is, who it is for, and why it matters. Navigate with arrows or keyboard.</p>
+    <p class="section-desc">Sixteen slides covering what ATLAS-7 is, who it is for, and why it matters. Navigate with arrows or keyboard.</p>
   </div>
   <div class="deck-viewer">
     <div class="deck-canvas-wrap" id="deck-wrap"><canvas id="deck-canvas"></canvas><div class="deck-fallback" id="deck-fallback" hidden><p>Loading slides...</p></div></div>
     <div class="deck-controls">
       <button id="deck-prev" disabled>&#8592; Previous</button>
-      <span class="deck-page" id="deck-page">Loading...</span>
+      <span class="deck-page" id="deck-page">1 / 16</span>
       <button id="deck-next" disabled>Next &#8594;</button>
       <a class="deck-download" href="assets/media/atlas7-deck.pdf" download>&#8595; Download PDF</a>
     </div>
@@ -152,15 +152,15 @@
   <div class="section-head">
     <span class="section-num">04 / PODCAST</span>
     <h2 class="section-title">The Model Risk Minute.</h2>
-    <p class="section-desc">A two-minute briefing on effective challenge, the gap between knowing the statistics and making the call, and why the hard part is Friday afternoon.</p>
+    <p class="section-desc">A deep-dive briefing on model risk validation — the five-day review, the evidence that matters, and the judgment calls that separate examiners from rubber stamps.</p>
   </div>
   <div class="podcast-player" id="podcast">
     <div class="podcast-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="23"/><line x1="8" x2="16" y1="23" y2="23"/></svg></div>
     <div class="podcast-meta">
-      <span class="pod-label">Model Risk Minute</span>
-      <h3>Effective Challenge Under Pressure</h3>
+      <span class="pod-label">ATLAS-7 Podcast</span>
+      <h3>Five Days to Audit Credit AI</h3>
       <p class="pod-host">Richard LeClezio</p>
-      <p class="pod-desc">SR 11-7 says effective challenge means the ability to identify limitations and produce accurate findings. The real test is whether you can hold that finding when the developer pushes back, the business says launch is Monday, and the CRO's office asks if this needs committee.</p>
+      <p class="pod-desc">A deep dive into model risk validation under pressure — the five-day review, the evidence that matters, the developer pushback, and the decision that goes to committee. How ATLAS-7 trains the judgment that separates examiners from rubber stamps.</p>
       <div class="pod-controls">
         <button class="pod-play" id="pod-play" aria-label="Play podcast"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6,3 20,12 6,21"/></svg></button>
         <div class="pod-progress-wrap">
@@ -170,7 +170,7 @@
       </div>
     </div>
   </div>
-  <audio id="podcast-audio" preload="none" src="assets/mra-podcast.mp3"></audio>
+  <audio id="podcast-audio" preload="none" src="assets/media/podcast-full.m4a"></audio>
 </section>
 
 </div>
@@ -219,14 +219,12 @@
 // Infographics carousel
 (()=>{
 const slides=[
-  {img:'assets/media/infographic-01.jpg',title:'The 40-Hour Budget',desc:'The full test plan needs 49 hours. You have 40. Every test you run is a test you chose over something else. The budget forces prioritisation — which is exactly what real validation demands.'},
-  {img:'assets/media/infographic-02.jpg',title:'The Defect Spectrum',desc:'Each case deals eleven areas into severe defects, mild defects, false alarms and clean results. Some cases have no High-severity defects at all, so returning every model is not a winning strategy.'},
-  {img:'assets/media/infographic-03.jpg',title:'The Scoring Engine',desc:'One hundred points across five dimensions. Findings carry fifty, but precision, challenges, your opinion and your conduct under pressure carry the other fifty. The score punishes both misses and overstatements.'},
-  {img:'assets/media/infographic-04.jpg',title:'The Five-Day Timeline',desc:'Nine hours a day, five days, and an inbox that does not care about your plan. Tuesday brings business pressure. Wednesday, a vendor offer. Thursday, an escalation choice. Friday, the developer fights back.'},
-  {img:'assets/media/infographic-05.jpg',title:'The Evidence Chain',desc:'Every test produces a chart, a measured result and a threshold strip. Three zones: within tolerance, watch band, breach. The watch band is where judgment separates the examiners from the rubber stamps.'},
-  {img:'assets/media/infographic-06.jpg',title:'The Developer Challenge',desc:'On Friday the lead developer contests your top three findings. Some replies carry evidence you can check. Some carry only confidence. The ten challenge points reward knowing the difference.'},
-  {img:'assets/media/infographic-07.jpg',title:'The Opinion Framework',desc:'Approve, approve with conditions, or return to developer. Twenty points for the right call. The answer key reveals which opinion the evidence actually supported — after you commit.'},
-  {img:'assets/media/infographic-08.jpg',title:'The Regulatory Landscape',desc:'The simulation maps each test to SR 11-7, ECOA, the AI Act and interagency guidance. The references provide training context — the scenario is not an authoritative statement of current requirements.'}
+  {img:'assets/media/infographic-01.jpg',title:'Inside the Validation Room',desc:'The complete system map — governing regulatory standards, the five-day validation timeline, evidence and signal evaluation, the 100-point scoring rubric, and how findings flow into the committee memorandum.'},
+  {img:'assets/media/infographic-02.jpg',title:'Model Risk Simulation Overview',desc:'From Monday briefing to Friday opinion — the full simulation lifecycle. How 212 features and 31,000 monthly decisions flow through vendor engagement, regulatory escalation, and the final committee memorandum.'},
+  {img:'assets/media/infographic-03.jpg',title:'The Validation Room — Model Risk Simulation',desc:'The 5-day lifecycle under a 40-hour budget. Scoring breakdown and performance tiers, evidence mechanics and signal detection, the model defect findings framework, and target user profiles.'},
+  {img:'assets/media/infographic-04.jpg',title:'Model Risk Under Pressure',desc:'A high-volume automated credit scoring model under review. The five-day journey from initial brief through business pushback, vendor offers, regulatory oversight, and the developer challenge — with the decision matrix, scoring brackets, and governance framework.'},
+  {img:'assets/media/infographic-05.jpg',title:'Model Risk Challenge Simulation',desc:'Core constraints, the 5-day validation timeline, evidence mechanics and threshold bands, scoring rubric and grading performance, performance grading tiers, and the regulatory frameworks and standards that underpin every finding.'},
+  {img:'assets/media/infographic-06.jpg',title:'Governance Evaluation Workflow',desc:'Eight panels covering each review day, the developer challenge, signal versus noise evaluation, the final memorandum and scoring matrix, and the governance and regulatory framework — from SR 11-7 to the EU AI Act.'}
 ];
 const track=document.getElementById('carousel-track'),dots=document.getElementById('carousel-dots');
 let idx=0;

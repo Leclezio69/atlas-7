@@ -6,8 +6,7 @@ node_modules/
 .env
 .env.*
 .vercel
-*.m4a
 /ATLAS-7_*.png
 /ATLAS-7_*.pdf
 /Model_Risk_*.png
-/Five_Days_*.m4a
+/*.m4a
