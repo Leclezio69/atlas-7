@@ -1,6 +1,6 @@
 /* Reading-first workspace: content determines height, and panels can shrink. */
-:root,:root[data-theme="dark"]{--ink:#f2f3eb;--ink-2:#bec8b8;--rule:#46513f}
-:root[data-theme="light"]{--ink:#20291d;--ink-2:#485442;--rule:#b8c2af}
+:root,:root[data-theme="dark"]{--ink:#f2f1eb;--ink-2:#beb9b2;--rule:#464340}
+:root[data-theme="light"]{--ink:#1e1e1c;--ink-2:#56534e;--rule:#c5c2bb}
 
 @media screen{
 body{font-size:16px;line-height:1.65}

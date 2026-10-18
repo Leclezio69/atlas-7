@@ -29,7 +29,7 @@
    ctx.clearRect(0,0,width,height);
    const cx=width/2,cy=height*.49,scale=Math.min(width*.21,height*.285),yaw=camera.yaw+offsetYaw+(motion?time*.000045:0),pitch=camera.pitch;
    camera.spread+=(Number(!!options.exploded)-camera.spread)*.065;
-   const bg=ctx.createRadialGradient(cx,cy,5,cx,cy,width*.63);bg.addColorStop(0,'#263024');bg.addColorStop(.5,'#101b15');bg.addColorStop(1,'#080f0c');ctx.fillStyle=bg;ctx.fillRect(0,0,width,height);
+   const bg=ctx.createRadialGradient(cx,cy,5,cx,cy,width*.63);bg.addColorStop(0,'#262523');bg.addColorStop(.5,'#101110');bg.addColorStop(1,'#080908');ctx.fillStyle=bg;ctx.fillRect(0,0,width,height);
    ctx.fillStyle='#d6d3b8';for(const d of dots){ctx.globalAlpha=.08+(d.r===1?.15:0);ctx.beginPath();ctx.arc(d.x*width,d.y*height,d.r,0,TAU);ctx.fill()}ctx.globalAlpha=1;
    // Calibrated reference rings and instrument graduations.
    ctx.save();ctx.translate(cx,cy);ctx.scale(1,.79);for(let r of [1.39,1.5,1.87]){ctx.strokeStyle=r===1.87?'#8fa08418':'#cfb98e24';ctx.lineWidth=.65;ctx.beginPath();ctx.arc(0,0,scale*r,0,TAU);ctx.stroke()}
